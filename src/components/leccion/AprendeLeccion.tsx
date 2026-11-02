@@ -59,13 +59,13 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
       );
     case 'senales':
       return (
-        <SeccionAprende titulo={bloque.titulo}>
+        <SeccionAprende titulo={bloque.titulo} plegable>
           <SenalesView senales={bloque.senales} />
         </SeccionAprende>
       );
     case 'simbolos':
       return (
-        <SeccionAprende titulo={bloque.titulo} descripcion={bloque.descripcion}>
+        <SeccionAprende titulo={bloque.titulo} descripcion={bloque.descripcion} plegable>
           <div className="grid gap-5 md:grid-cols-2">
             {bloque.simbolos.map((simbolo) => (
               <TarjetaSimbolo key={simbolo.id} simbolo={simbolo} />
@@ -146,20 +146,66 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
   }
 }
 
-function SeccionAprende({ titulo, descripcion, children }: { titulo: string; descripcion?: string; children: ReactNode }) {
+
+function SeccionAprende({
+  titulo,
+  descripcion,
+  children,
+  plegable = false,
+}: {
+  titulo: string;
+  descripcion?: string;
+  children: ReactNode;
+  plegable?: boolean;
+}) {
+  if (plegable) {
+    return (
+      <details className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 sm:p-6 [&::-webkit-details-marker]:hidden">
+          <div className="space-y-2">
+            <h3 className="text-xl font-bold text-blue-900">
+              {titulo}
+            </h3>
+            {descripcion && (
+              <p className="text-sm leading-normal text-slate-600">
+                {descripcion}
+              </p>
+            )}
+          </div>
+
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-2xl font-medium text-blue-700">
+            <span className="group-open:hidden">+</span>
+            <span className="hidden group-open:inline">−</span>
+          </span>
+        </summary>
+
+        <div className="animate-aparecer border-t border-slate-100 p-5 sm:p-6">
+          {children}
+        </div>
+      </details>
+    );
+  }
+
   return (
     <section className="space-y-6">
       <div className="space-y-2">
         <div className="flex items-center gap-3">
           <span className="h-7 w-1.5 rounded-full bg-blue-600" aria-hidden />
-          <h3 className="text-2xl font-bold text-blue-900">{titulo}</h3>
+          <h3 className="text-2xl font-bold text-blue-900">
+            {titulo}
+          </h3>
         </div>
-        {descripcion && <p className="max-w-3xl text-slate-600">{descripcion}</p>}
+        {descripcion && (
+          <p className="max-w-3xl text-slate-600">
+            {descripcion}
+          </p>
+        )}
       </div>
       {children}
     </section>
   );
 }
+
 
 function TarjetaIntroView({ tarjeta }: { tarjeta: TarjetaIntro }) {
   const Icono = tarjeta.icono;
