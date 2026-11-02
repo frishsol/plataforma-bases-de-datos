@@ -48,8 +48,12 @@ export function Inicio({ progreso, onNavegar }: InicioProps) {
               conviértelos en tablas relacionales, prepáralos para MySQL y normalízalos hasta la 3FN.
             </p>
             <div className="flex justify-center lg:justify-start">
-              <Boton
-                onClick={() => onNavegar({ nombre: 'modulo', modulo: MODULO_INICIAL })}
+              <Boton                
+                onClick={() =>
+                  document.getElementById('catalogo-modulos')?.scrollIntoView({
+                    behavior: 'smooth',
+                  })
+                }
                 variante="claro"
                 tamano="lg"
               >
@@ -65,7 +69,7 @@ export function Inicio({ progreso, onNavegar }: InicioProps) {
         </div>
       </section>
 
-      <section className="space-y-8">
+      <section id="catalogo-modulos" className="space-y-8">
         <div className="space-y-2 text-center">
           <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Ruta de aprendizaje</p>
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Elige tu módulo</h2>
