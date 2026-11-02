@@ -1,11 +1,12 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { ChevronDown, Lightbulb, ListOrdered } from 'lucide-react';
 import { ComparativaNotaciones } from '@/components/diagrama/ComparativaNotaciones';
 import { DiagramaERSvg } from '@/components/diagrama/DiagramaERSvg';
 import { ClasificadorAtributos } from '@/components/actividad/ClasificadorAtributos';
 import { ElementosGraficos, ComparativaFiguras } from '@/components/leccion/ElementosGraficos';
 import { ComparativaTablas } from '@/components/leccion/ComparativaTablas';
-import { TarjetaSimbolo } from '@/components/leccion/TarjetaSimbolo';
+import { TarjetaSimbolo, DetalleSimbolo } from '@/components/leccion/TarjetaSimbolo';
+import type { SimboloChen } from '@/tipos/simbolosChen';
 import { Tarjeta } from '@/components/ui/Tarjeta';
 import type { BloqueAprende, NotacionAlternativa, SenalTexto, TarjetaIntro } from '@/tipos/leccion';
 
@@ -63,16 +64,18 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
           <SenalesView senales={bloque.senales} />
         </SeccionAprende>
       );
-    case 'simbolos':
-      return (
-        <SeccionAprende titulo={bloque.titulo} descripcion={bloque.descripcion} plegable>
-          <div className="grid gap-5 md:grid-cols-2">
-            {bloque.simbolos.map((simbolo) => (
-              <TarjetaSimbolo key={simbolo.id} simbolo={simbolo} />
-            ))}
-          </div>
-        </SeccionAprende>
-      );
+    
+  case 'simbolos':
+    return (
+      <SeccionAprende
+        titulo={bloque.titulo}
+        descripcion={bloque.descripcion}
+        plegable
+      >
+        <GaleriaSimbolos simbolos={bloque.simbolos} />
+      </SeccionAprende>
+    );
+
     case 'actividad-atributos':
       return (
         <details className="group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200/80 open:ring-blue-200">
@@ -262,3 +265,43 @@ function NotacionView({ notacion }: { notacion: NotacionAlternativa }) {
     </Tarjeta>
   );
 }
+
+function GaleriaSimbolos({
+  simbolos,
+}: {
+  simbolos: SimboloChen[];
+}) {
+  const [seleccionado, setSeleccionado] = useState<string | null>(null);
+
+  const simboloActivo = simbolos.find(
+    (simbolo) => simbolo.id === seleccionado
+  );
+
+  return (
+    <div className="space-y-5">
+      <p className="text-sm text-slate-600">
+        Selecciona un símbolo para consultar su explicación y ejemplo.
+      </p>
+
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+        {simbolos.map((simbolo) => (
+          <TarjetaSimbolo
+            key={simbolo.id}
+            simbolo={simbolo}
+            activo={seleccionado === simbolo.id}
+            onSeleccionar={() =>
+              setSeleccionado(
+                seleccionado === simbolo.id ? null : simbolo.id
+              )
+            }
+          />
+        ))}
+      </div>
+
+      {simboloActivo && (
+        <DetalleSimbolo simbolo={simboloActivo} />
+      )}
+    </div>
+  );
+}
+
