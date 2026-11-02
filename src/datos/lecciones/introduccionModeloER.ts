@@ -79,7 +79,7 @@ export const BLOQUES_INTRODUCCION_ER: BloqueAprende[] = [
     tipo: 'destacado',
     titulo: 'Sobre las líneas',
     texto:
-      'Las líneas son recursos gráficos, no un cuarto concepto del modelo. Solo conectan entidades, atributos y relaciones.',
+      'Las líneas conectan los elementos del diagrama entidad-relación. No constituyen un cuarto tipo de elemento conceptual, pero son fundamentales para representar las asociaciones. Según la notación utilizada, también pueden expresar la participación de las entidades en una relación.',
   },
   {
     tipo: 'senales',
