@@ -197,8 +197,8 @@ const BLOQUES_SIMBOLOGIA: BloqueAprende[] = [
       {
         titulo: 'Entidad asociativa',
         figura: 'entidad-asociativa',
-        descripcion: 'Nace de una relación N:M y permite que la asociación tenga datos propios.',
-        ejemplo: 'Servicio contratado, con su precio_cobrado.',
+        descripcion: 'Representa una asociación como entidad propia, generalmente a partir de una relación N:M. Permite identificar sus ocurrencias o relacionarlas con otras entidades.',
+        ejemplo: 'Contratación de un Servicio durante una Estancia, relacionada con el Empleado que la atendió.',
       },
     ],
   },
