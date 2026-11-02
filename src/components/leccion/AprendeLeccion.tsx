@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Lightbulb, ListOrdered } from 'lucide-react';
+import { ChevronDown, Lightbulb, ListOrdered } from 'lucide-react';
 import { ComparativaNotaciones } from '@/components/diagrama/ComparativaNotaciones';
 import { DiagramaERSvg } from '@/components/diagrama/DiagramaERSvg';
 import { ClasificadorAtributos } from '@/components/actividad/ClasificadorAtributos';
@@ -75,9 +75,19 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
       );
     case 'actividad-atributos':
       return (
-        <SeccionAprende titulo={bloque.titulo} descripcion={bloque.descripcion}>
-          <ClasificadorAtributos atributos={bloque.atributos} />
-        </SeccionAprende>
+        <details className="group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200/80 open:ring-blue-200">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 [&::-webkit-details-marker]:hidden">
+            <span className="space-y-1">
+              <span className="block text-xs font-semibold uppercase tracking-wide text-blue-600">Actividad</span>
+              <span className="block text-lg font-bold text-slate-900">{bloque.titulo}</span>
+            </span>
+            <ChevronDown className="h-5 w-5 shrink-0 text-slate-500 transition-transform duration-300 group-open:rotate-180" aria-hidden />
+          </summary>
+          <div className="animate-aparecer space-y-5 border-t border-slate-100 px-6 py-6">
+            <p className="leading-normal text-slate-600">{bloque.descripcion}</p>
+            <ClasificadorAtributos atributos={bloque.atributos} />
+          </div>
+        </details>
       );
     case 'ejemplo-diagrama':
       return (
