@@ -30,7 +30,6 @@ const CARACTERISTICAS = [
 ];
 
 const MODULO_INICIAL = MODULOS[0];
-const PRIMERA_LECCION = MODULO_INICIAL.temas.find((tema) => tema.leccion)?.leccion;
 
 export function Inicio({ progreso, onNavegar }: InicioProps) {
   return (
@@ -50,11 +49,7 @@ export function Inicio({ progreso, onNavegar }: InicioProps) {
             </p>
             <div className="flex justify-center lg:justify-start">
               <Boton
-                onClick={() =>
-                  PRIMERA_LECCION
-                    ? onNavegar({ nombre: 'leccion', modulo: MODULO_INICIAL, leccion: PRIMERA_LECCION })
-                    : onNavegar({ nombre: 'modulo', modulo: MODULO_INICIAL })
-                }
+                onClick={() => onNavegar({ nombre: 'modulo', modulo: MODULO_INICIAL })}
                 variante="claro"
                 tamano="lg"
               >
