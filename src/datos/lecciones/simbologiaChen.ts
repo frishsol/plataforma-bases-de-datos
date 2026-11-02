@@ -29,13 +29,18 @@ const SIMBOLOS_ENTIDADES: SimboloChen[] = [
     id: 'entidad-asociativa',
     nombre: 'Entidad asociativa',
     figura: 'entidad-asociativa',
-    significado: 'Surge de una relación N:M y guarda datos propios de esa unión.',
-    comoSeDibuja: ['Se dibuja como un rectángulo que contiene un rombo.'],
+    significado:
+      'Es una entidad que surge al representar una asociación entre entidades como una entidad propia, generalmente a partir de una relación N:M. Permite identificar individualmente las ocurrencias de esa asociación o relacionarlas con otras entidades.',
+    comoSeDibuja: [
+      'En esta aplicación se representa mediante un rectángulo que contiene un rombo.',
+      'Esta es una convención gráfica; no es un símbolo universal de la notación de Chen.',
+    ],
     cuandoUsar:
-      'Cuando una relación N:M necesita guardar datos propios. Se distingue de la débil: la asociativa une dos entidades fuertes, mientras que la débil depende de una sola y tiene rectángulo doble.',
-    ejemplo: 'Servicio contratado: asocia una Estancia con un Servicio y registra el precio_cobrado de esa contratación.',
+      'Cuando necesitamos tratar una asociación como entidad propia, por ejemplo, para identificar cada ocurrencia o establecer nuevas relaciones con otras entidades. Una relación N:M puede tener atributos sin convertirse en entidad asociativa.',
+    ejemplo:
+      'En Hotel Patitas, Estancia y Servicio tienen una relación N:M llamada contrata. El atributo precio_cobrado puede conectarse directamente al rombo de la relación. Si necesitamos relacionar cada contratación con el Empleado que la atendió, podemos representar la contratación como entidad asociativa.',
     variante:
-      "Algunas variantes de Chen la unen al rombo con línea discontinua. En Crow's Foot es una sola caja entre las dos entidades.",
+      'En la notación de Chen, las relaciones pueden tener atributos propios. Una entidad asociativa del modelo conceptual no debe confundirse con la tabla intermedia utilizada para transformar una relación N:M al modelo relacional.',
   },
 ];
 
