@@ -8,7 +8,7 @@ import { ComparativaTablas } from '@/components/leccion/ComparativaTablas';
 import { TarjetaSimbolo, DetalleSimbolo } from '@/components/leccion/TarjetaSimbolo';
 import { Tarjeta } from '@/components/ui/Tarjeta';
 import type { SimboloChen } from '@/tipos/simbolosChen';
-import type { BloqueAprende, NotacionAlternativa, SenalTexto, TarjetaIntro } from '@/tipos/leccion';
+import type { BloqueAprende, SenalTexto, TarjetaIntro } from '@/tipos/leccion';
 
 interface AprendeLeccionProps {
   bloques: BloqueAprende[];
@@ -16,7 +16,7 @@ interface AprendeLeccionProps {
 
 export function AprendeLeccion({ bloques }: AprendeLeccionProps) {
   return (
-    <div className="animate-aparecer space-y-10">
+    <div className="animate-aparecer space-y-12">
       {bloques.map((bloque, indice) => (
         <BloqueView key={indice} bloque={bloque} />
       ))}
@@ -28,7 +28,7 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
   switch (bloque.tipo) {
     case 'tarjetas-intro':
       return (
-        <SeccionAprende titulo={bloque.titulo} plegable>
+        <SeccionAprende titulo={bloque.titulo}>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {bloque.tarjetas.map((tarjeta) => (
               <TarjetaIntroView key={tarjeta.titulo} tarjeta={tarjeta} />
@@ -38,19 +38,17 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
       );
 
     case 'destacado':
-      // Los recordatorios siguen visibles: no hay que abrirlos para leerlos.
       return (
-        <aside className="flex gap-4 rounded-3xl bg-blue-700 p-6 text-white shadow-lg shadow-blue-700/20 sm:p-8">
+        <div className="flex gap-4 rounded-3xl bg-blue-700 p-6 text-white shadow-lg shadow-blue-700/20 sm:p-8">
           <Lightbulb className="mt-0.5 h-6 w-6 shrink-0 text-sky-200" aria-hidden />
           <div className="space-y-2">
             <p className="text-sm font-semibold uppercase tracking-wide text-sky-200">{bloque.titulo}</p>
             <p className="text-lg leading-normal text-white">{bloque.texto}</p>
           </div>
-        </aside>
+        </div>
       );
 
     case 'elementos-graficos':
-      // Las tarjetas son seleccionables: no añadimos otro acordeón.
       return (
         <SeccionAprende titulo={bloque.titulo}>
           <ElementosGraficos elementos={bloque.elementos} />
@@ -58,7 +56,6 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
       );
 
     case 'comparativa-figuras':
-      // Las comparaciones también se seleccionan individualmente.
       return (
         <SeccionAprende titulo={bloque.titulo}>
           <ComparativaFiguras elementos={bloque.elementos} />
@@ -80,26 +77,30 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
       );
 
     case 'actividad-atributos':
-      // Se conserva la actividad y su lógica; no se altera ClasificadorAtributos.
       return (
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="h-7 w-1.5 rounded-full bg-teal-600" aria-hidden />
-            <h3 className="text-2xl font-bold text-blue-900">{bloque.titulo}</h3>
+        <details className="group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200/80 open:ring-blue-200">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 [&::-webkit-details-marker]:hidden">
+            <span className="space-y-1">
+              <span className="block text-xs font-semibold uppercase tracking-wide text-blue-600">Actividad</span>
+              <span className="block text-lg font-bold text-slate-900">{bloque.titulo}</span>
+            </span>
+            <ChevronDown className="h-5 w-5 shrink-0 text-slate-500 transition-transform duration-300 group-open:rotate-180" aria-hidden />
+          </summary>
+          <div className="animate-aparecer space-y-5 border-t border-slate-100 px-6 py-6">
+            <p className="leading-normal text-slate-600">{bloque.descripcion}</p>
+            <ClasificadorAtributos atributos={bloque.atributos} />
           </div>
-          <p className="text-slate-600">{bloque.descripcion}</p>
-          <ClasificadorAtributos atributos={bloque.atributos} />
-        </section>
+        </details>
       );
 
     case 'ejemplo-diagrama':
       return (
-        <SeccionAprende titulo={bloque.titulo} descripcion={bloque.descripcion} plegable>
+        <SeccionAprende titulo={bloque.titulo} descripcion={bloque.descripcion}>
           <Tarjeta className="grid gap-6 p-5 sm:p-8 lg:grid-cols-[1.4fr_1fr]">
-            <div className="min-w-0 rounded-2xl bg-sky-50 p-4 ring-1 ring-sky-100">
+            <div className="rounded-2xl bg-sky-50 p-4 ring-1 ring-sky-100">
               <DiagramaERSvg diagrama={bloque.diagrama} descripcion={bloque.descripcion} />
             </div>
-            <div className="flex min-w-0 flex-col gap-6">
+            <div className="flex flex-col gap-6">
               <div className="space-y-3">
                 <p className="flex items-center gap-2 font-semibold text-blue-800">
                   <ListOrdered className="h-5 w-5" aria-hidden />
@@ -107,10 +108,8 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
                 </p>
                 <ol className="space-y-3">
                   {bloque.pasos.map((paso, indice) => (
-                    <li key={`${indice}-${paso}`} className="flex gap-3 text-sm leading-normal text-slate-700">
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">
-                        {indice + 1}
-                      </span>
+                    <li key={paso} className="flex gap-3 text-sm leading-normal text-slate-700">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">{indice + 1}</span>
                       <span className="pt-0.5">{paso}</span>
                     </li>
                   ))}
@@ -126,7 +125,7 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
 
     case 'comparativa-tablas':
       return (
-        <SeccionAprende titulo={bloque.titulo} plegable>
+        <SeccionAprende titulo={bloque.titulo}>
           <div className="space-y-6">
             <p className="max-w-3xl leading-normal text-slate-700">{bloque.texto}</p>
             <ComparativaTablas logica={bloque.logica} fisica={bloque.fisica} diferencias={bloque.diferencias} />
@@ -135,24 +134,11 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
       );
 
     case 'comparativa-notaciones':
-    return (
-      <SeccionAprende titulo={bloque.titulo}>
-        <div className="space-y-6">
-          <p className="max-w-3xl leading-normal text-slate-700">
-            {bloque.texto}
-          </p>
+      return (
+        <SeccionAprende titulo={bloque.titulo}>
           <ComparativaNotaciones />
-          <div className="grid gap-5 md:grid-cols-3">
-            {bloque.otras.map((notacion) => (
-              <NotacionView
-                key={notacion.nombre}
-                notacion={notacion}
-              />
-            ))}
-          </div>
-        </div>
-      </SeccionAprende>
-    );
+        </SeccionAprende>
+      );
   }
 }
 
@@ -169,8 +155,8 @@ function SeccionAprende({
 }) {
   if (plegable) {
     return (
-      <details className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm open:border-blue-200">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 sm:p-6 [&::-webkit-details-marker]:hidden">
+      <details className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 sm:p-6 [&::-webkit-details-marker]:hidden">
           <div className="space-y-2">
             <h3 className="text-xl font-bold text-blue-900">{titulo}</h3>
             {descripcion && <p className="text-sm leading-normal text-slate-600">{descripcion}</p>}
@@ -246,15 +232,6 @@ function SenalesView({ senales }: { senales: SenalTexto[] }) {
   );
 }
 
-function NotacionView({ notacion }: { notacion: NotacionAlternativa }) {
-  return (
-    <Tarjeta className="space-y-2 p-5">
-      <h4 className="font-bold text-slate-900">{notacion.nombre}</h4>
-      <p className="text-sm leading-normal text-slate-700">{notacion.descripcion}</p>
-    </Tarjeta>
-  );
-}
-
 function GaleriaSimbolos({ simbolos }: { simbolos: SimboloChen[] }) {
   const [seleccionado, setSeleccionado] = useState<string | null>(null);
   const simboloActivo = simbolos.find((simbolo) => simbolo.id === seleccionado);
@@ -270,11 +247,13 @@ function GaleriaSimbolos({ simbolos }: { simbolos: SimboloChen[] }) {
         {simbolos.map((simbolo, indice) => (
           <div
             key={simbolo.id}
-            className={cincoSimbolos
-              ? indice < 3
-                ? 'flex min-w-0 sm:col-span-2 [&>button]:w-full'
-                : 'flex min-w-0 sm:col-span-3 [&>button]:w-full'
-              : 'flex min-w-0 [&>button]:w-full'}
+            className={
+              cincoSimbolos
+                ? indice < 3
+                  ? 'flex min-w-0 sm:col-span-2 [&>button]:w-full'
+                  : 'flex min-w-0 sm:col-span-3 [&>button]:w-full'
+                : 'flex min-w-0 [&>button]:w-full'
+            }
           >
             <TarjetaSimbolo
               simbolo={simbolo}
