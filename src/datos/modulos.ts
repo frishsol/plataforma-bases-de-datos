@@ -7,6 +7,7 @@ import { DESAFIO_4 } from '@/datos/desafio4';
 import { LECCION_ANALISIS_PLANTEAMIENTO } from '@/datos/lecciones/analisisPlanteamiento';
 import { LECCION_MODELO_FISICO_INTRO } from '@/datos/lecciones/modeloFisicoIntro';
 import { LECCION_SIMBOLOGIA_CHEN } from '@/datos/lecciones/simbologiaChen';
+import { LECCION_MODELO_RELACIONAL } from '@/datos/lecciones/modeloRelacional';
 
 export const MODULOS: Modulo[] = [
   {
@@ -30,6 +31,7 @@ export const MODULOS: Modulo[] = [
       {
         titulo: 'Modelo relacional (lógico)',
         descripcion: 'Transforma el diagrama E-R en tablas, con claves primarias, claves foráneas y tablas intermedias.',
+        leccion: LECCION_MODELO_RELACIONAL,
       },
       {
         titulo: 'Modelo físico: preparando la base de datos para MySQL',
