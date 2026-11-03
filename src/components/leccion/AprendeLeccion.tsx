@@ -117,6 +117,7 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
               aria-hidden
             />
           </summary>
+
           <div className="animate-aparecer space-y-5 border-t border-slate-100 px-6 py-6">
             <p className="leading-normal text-slate-600">
               {bloque.descripcion}
@@ -139,6 +140,7 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
                 descripcion={bloque.descripcion}
               />
             </div>
+
             <div className="flex flex-col gap-6">
               <div className="space-y-3">
                 <p className="flex items-center gap-2 font-semibold text-blue-800">
@@ -148,6 +150,7 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
                   />
                   Cómo se construye
                 </p>
+
                 <ol className="space-y-3">
                   {bloque.pasos.map((paso, indice) => (
                     <li
@@ -162,6 +165,7 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
                   ))}
                 </ol>
               </div>
+
               <p className="rounded-2xl bg-teal-50 p-4 text-sm leading-normal text-teal-900 ring-1 ring-teal-100">
                 <span className="font-semibold">
                   Cómo se lee:
@@ -236,11 +240,13 @@ function SeccionAprende({
               </p>
             )}
           </div>
+
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-2xl font-medium text-blue-700">
             <span className="group-open:hidden">+</span>
             <span className="hidden group-open:inline">−</span>
           </span>
         </summary>
+
         <div className="animate-aparecer border-t border-slate-100 p-5 sm:p-6">
           {children}
         </div>
@@ -260,6 +266,7 @@ function SeccionAprende({
             {titulo}
           </h3>
         </div>
+
         {descripcion && (
           <p className="max-w-3xl text-slate-600">
             {descripcion}
@@ -284,12 +291,14 @@ function TarjetaIntroView({
         <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md shadow-blue-600/25">
           <Icono className="h-6 w-6" aria-hidden />
         </span>
+
         {tarjeta.etiqueta && (
           <span className="rounded-full bg-sky-100 px-3 py-1 text-xs font-bold text-sky-900">
             {tarjeta.etiqueta}
           </span>
         )}
       </div>
+
       <div className="space-y-2">
         <h4 className="text-lg font-bold text-slate-900">
           {tarjeta.titulo}
@@ -313,26 +322,18 @@ function SenalesView({
         <table className="w-full min-w-[32rem] text-left text-sm">
           <thead className="bg-blue-600 text-white">
             <tr>
-              <th
-                scope="col"
-                className="px-5 py-4 font-semibold"
-              >
+              <th scope="col" className="px-5 py-4 font-semibold">
                 Señal en el texto
               </th>
-              <th
-                scope="col"
-                className="px-5 py-4 font-semibold"
-              >
+              <th scope="col" className="px-5 py-4 font-semibold">
                 Suele indicar
               </th>
-              <th
-                scope="col"
-                className="px-5 py-4 font-semibold"
-              >
+              <th scope="col" className="px-5 py-4 font-semibold">
                 Ejemplo
               </th>
             </tr>
           </thead>
+
           <tbody className="divide-y divide-slate-100">
             {senales.map((senal) => (
               <tr
@@ -374,6 +375,8 @@ function NotacionView({
   );
 }
 
+// Galería adaptable de símbolos de Chen.
+// Los grupos con cinco símbolos se organizan en filas de 3 y 2.
 function GaleriaSimbolos({
   simbolos,
 }: {
@@ -386,6 +389,8 @@ function GaleriaSimbolos({
     (simbolo) => simbolo.id === seleccionado
   );
 
+  const cincoSimbolos = simbolos.length === 5;
+
   return (
     <div className="w-full space-y-5">
       <p className="text-sm text-slate-600">
@@ -393,25 +398,43 @@ function GaleriaSimbolos({
       </p>
 
       <div
-        className="grid w-full gap-4"
-        style={{
-          gridTemplateColumns:
-            'repeat(auto-fit, minmax(min(100%, 230px), 1fr))',
-        }}
+        className={
+          cincoSimbolos
+            ? 'grid w-full grid-cols-1 gap-4 sm:grid-cols-6'
+            : 'grid w-full gap-4'
+        }
+        style={
+          cincoSimbolos
+            ? undefined
+            : {
+                gridTemplateColumns:
+                  'repeat(auto-fit, minmax(min(100%, 230px), 1fr))',
+              }
+        }
       >
-        {simbolos.map((simbolo) => (
-          <TarjetaSimbolo
+        {simbolos.map((simbolo, indice) => (
+          <div
             key={simbolo.id}
-            simbolo={simbolo}
-            activo={seleccionado === simbolo.id}
-            onSeleccionar={() =>
-              setSeleccionado(
-                seleccionado === simbolo.id
-                  ? null
-                  : simbolo.id
-              )
+            className={
+              cincoSimbolos
+                ? indice < 3
+                  ? 'flex min-w-0 sm:col-span-2 [&>button]:w-full'
+                  : 'flex min-w-0 sm:col-span-3 [&>button]:w-full'
+                : 'flex min-w-0 [&>button]:w-full'
             }
-          />
+          >
+            <TarjetaSimbolo
+              simbolo={simbolo}
+              activo={seleccionado === simbolo.id}
+              onSeleccionar={() =>
+                setSeleccionado(
+                  seleccionado === simbolo.id
+                    ? null
+                    : simbolo.id
+                )
+              }
+            />
+          </div>
         ))}
       </div>
 
