@@ -71,7 +71,12 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
         titulo={bloque.titulo}
         descripcion={bloque.descripcion}
       >
-        <GaleriaSimbolos simbolos={bloque.simbolos} />
+        <div
+          className="grid gap-4"
+          style={{
+            gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, 230px), 1fr))`,
+          }}
+        >
       </SeccionAprende>
     );
 
