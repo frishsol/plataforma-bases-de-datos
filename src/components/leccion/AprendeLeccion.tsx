@@ -1,445 +1,238 @@
-import { useState, type ReactNode } from 'react';
-import { ChevronDown, Lightbulb, ListOrdered } from 'lucide-react';
-import { ComparativaNotaciones } from '@/components/diagrama/ComparativaNotaciones';
-import { DiagramaERSvg } from '@/components/diagrama/DiagramaERSvg';
-import { ClasificadorAtributos } from '@/components/actividad/ClasificadorAtributos';
-import {
-  ElementosGraficos,
-  ComparativaFiguras,
-} from '@/components/leccion/ElementosGraficos';
-import { ComparativaTablas } from '@/components/leccion/ComparativaTablas';
-import {
-  TarjetaSimbolo,
-  DetalleSimbolo,
-} from '@/components/leccion/TarjetaSimbolo';
-import type { SimboloChen } from '@/tipos/simbolosChen';
-import { Tarjeta } from '@/components/ui/Tarjeta';
+import { useState } from 'react';
+import { ChevronDown, X } from 'lucide-react';
+import { FiguraSimbolo } from '@/components/diagrama/FiguraSimbolo';
+import { ESTILOS_CONCEPTO } from '@/components/leccion/estilosConcepto';
 import type {
-  BloqueAprende,
-  NotacionAlternativa,
-  SenalTexto,
-  TarjetaIntro,
+  ElementoComparado,
+  ElementoGrafico,
 } from '@/tipos/leccion';
 
-interface AprendeLeccionProps {
-  bloques: BloqueAprende[];
-}
+const ESTILO_LINEA = {
+  fondo: 'bg-slate-100',
+  texto: 'text-slate-800',
+  etiqueta: 'Línea',
+};
 
-export function AprendeLeccion({ bloques }: AprendeLeccionProps) {
-  return (
-    <div className="animate-aparecer space-y-12">
-      {bloques.map((bloque, indice) => (
-        <BloqueView key={indice} bloque={bloque} />
-      ))}
-    </div>
-  );
-}
-
-function BloqueView({ bloque }: { bloque: BloqueAprende }) {
-  switch (bloque.tipo) {
-    case 'tarjetas-intro':
-      return (
-        <SeccionAprende titulo={bloque.titulo}>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {bloque.tarjetas.map((tarjeta) => (
-              <TarjetaIntroView
-                key={tarjeta.titulo}
-                tarjeta={tarjeta}
-              />
-            ))}
-          </div>
-        </SeccionAprende>
-      );
-
-    case 'destacado':
-      return (
-        <div className="flex gap-4 rounded-3xl bg-blue-700 p-6 text-white shadow-lg shadow-blue-700/20 sm:p-8">
-          <Lightbulb
-            className="mt-0.5 h-6 w-6 shrink-0 text-sky-200"
-            aria-hidden
-          />
-          <div className="space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-wide text-sky-200">
-              {bloque.titulo}
-            </p>
-            <p className="text-lg leading-normal text-white">
-              {bloque.texto}
-            </p>
-          </div>
-        </div>
-      );
-
-    case 'elementos-graficos':
-      return (
-        <SeccionAprende titulo={bloque.titulo}>
-          <ElementosGraficos elementos={bloque.elementos} />
-        </SeccionAprende>
-      );
-
-    case 'comparativa-figuras':
-      return (
-        <SeccionAprende titulo={bloque.titulo}>
-          <ComparativaFiguras elementos={bloque.elementos} />
-        </SeccionAprende>
-      );
-
-    case 'senales':
-      return (
-        <SeccionAprende titulo={bloque.titulo} plegable>
-          <SenalesView senales={bloque.senales} />
-        </SeccionAprende>
-      );
-
-    case 'simbolos':
-      return (
-        <SeccionAprende
-          titulo={bloque.titulo}
-          descripcion={bloque.descripcion}
-        >
-          <GaleriaSimbolos simbolos={bloque.simbolos} />
-        </SeccionAprende>
-      );
-
-    case 'actividad-atributos':
-      return (
-        <details className="group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200/80 open:ring-blue-200">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 [&::-webkit-details-marker]:hidden">
-            <span className="space-y-1">
-              <span className="block text-xs font-semibold uppercase tracking-wide text-blue-600">
-                Actividad
-              </span>
-              <span className="block text-lg font-bold text-slate-900">
-                {bloque.titulo}
-              </span>
-            </span>
-            <ChevronDown
-              className="h-5 w-5 shrink-0 text-slate-500 transition-transform duration-300 group-open:rotate-180"
-              aria-hidden
-            />
-          </summary>
-
-          <div className="animate-aparecer space-y-5 border-t border-slate-100 px-6 py-6">
-            <p className="leading-normal text-slate-600">
-              {bloque.descripcion}
-            </p>
-            <ClasificadorAtributos atributos={bloque.atributos} />
-          </div>
-        </details>
-      );
-
-    case 'ejemplo-diagrama':
-      return (
-        <SeccionAprende
-          titulo={bloque.titulo}
-          descripcion={bloque.descripcion}
-        >
-          <Tarjeta className="grid gap-6 p-5 sm:p-8 lg:grid-cols-[1.4fr_1fr]">
-            <div className="rounded-2xl bg-sky-50 p-4 ring-1 ring-sky-100">
-              <DiagramaERSvg
-                diagrama={bloque.diagrama}
-                descripcion={bloque.descripcion}
-              />
-            </div>
-
-            <div className="flex flex-col gap-6">
-              <div className="space-y-3">
-                <p className="flex items-center gap-2 font-semibold text-blue-800">
-                  <ListOrdered
-                    className="h-5 w-5"
-                    aria-hidden
-                  />
-                  Cómo se construye
-                </p>
-
-                <ol className="space-y-3">
-                  {bloque.pasos.map((paso, indice) => (
-                    <li
-                      key={paso}
-                      className="flex gap-3 text-sm leading-normal text-slate-700"
-                    >
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">
-                        {indice + 1}
-                      </span>
-                      <span className="pt-0.5">{paso}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-
-              <p className="rounded-2xl bg-teal-50 p-4 text-sm leading-normal text-teal-900 ring-1 ring-teal-100">
-                <span className="font-semibold">
-                  Cómo se lee:
-                </span>{' '}
-                {bloque.lectura}
-              </p>
-            </div>
-          </Tarjeta>
-        </SeccionAprende>
-      );
-
-    case 'comparativa-tablas':
-      return (
-        <SeccionAprende titulo={bloque.titulo}>
-          <div className="space-y-6">
-            <p className="max-w-3xl leading-normal text-slate-700">
-              {bloque.texto}
-            </p>
-            <ComparativaTablas
-              logica={bloque.logica}
-              fisica={bloque.fisica}
-              diferencias={bloque.diferencias}
-            />
-          </div>
-        </SeccionAprende>
-      );
-
-    case 'comparativa-notaciones':
-      return (
-        <SeccionAprende titulo={bloque.titulo}>
-          <div className="space-y-6">
-            <p className="max-w-3xl leading-normal text-slate-700">
-              {bloque.texto}
-            </p>
-            <ComparativaNotaciones />
-            <div className="grid gap-5 md:grid-cols-3">
-              {bloque.otras.map((notacion) => (
-                <NotacionView
-                  key={notacion.nombre}
-                  notacion={notacion}
-                />
-              ))}
-            </div>
-          </div>
-        </SeccionAprende>
-      );
-  }
-}
-
-function SeccionAprende({
-  titulo,
-  descripcion,
-  children,
-  plegable = false,
+// Elementos gráficos básicos: Entidad, Atributo,
+// Relación y Línea.
+export function ElementosGraficos({
+  elementos,
 }: {
-  titulo: string;
-  descripcion?: string;
-  children: ReactNode;
-  plegable?: boolean;
-}) {
-  if (plegable) {
-    return (
-      <details className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 sm:p-6 [&::-webkit-details-marker]:hidden">
-          <div className="space-y-2">
-            <h3 className="text-xl font-bold text-blue-900">
-              {titulo}
-            </h3>
-            {descripcion && (
-              <p className="text-sm leading-normal text-slate-600">
-                {descripcion}
-              </p>
-            )}
-          </div>
-
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-2xl font-medium text-blue-700">
-            <span className="group-open:hidden">+</span>
-            <span className="hidden group-open:inline">−</span>
-          </span>
-        </summary>
-
-        <div className="animate-aparecer border-t border-slate-100 p-5 sm:p-6">
-          {children}
-        </div>
-      </details>
-    );
-  }
-
-  return (
-    <section className="space-y-6">
-      <div className="space-y-2">
-        <div className="flex items-center gap-3">
-          <span
-            className="h-7 w-1.5 rounded-full bg-blue-600"
-            aria-hidden
-          />
-          <h3 className="text-2xl font-bold text-blue-900">
-            {titulo}
-          </h3>
-        </div>
-
-        {descripcion && (
-          <p className="max-w-3xl text-slate-600">
-            {descripcion}
-          </p>
-        )}
-      </div>
-      {children}
-    </section>
-  );
-}
-
-function TarjetaIntroView({
-  tarjeta,
-}: {
-  tarjeta: TarjetaIntro;
-}) {
-  const Icono = tarjeta.icono;
-
-  return (
-    <Tarjeta className="flex flex-col gap-4 p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
-      <div className="flex items-center justify-between">
-        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md shadow-blue-600/25">
-          <Icono className="h-6 w-6" aria-hidden />
-        </span>
-
-        {tarjeta.etiqueta && (
-          <span className="rounded-full bg-sky-100 px-3 py-1 text-xs font-bold text-sky-900">
-            {tarjeta.etiqueta}
-          </span>
-        )}
-      </div>
-
-      <div className="space-y-2">
-        <h4 className="text-lg font-bold text-slate-900">
-          {tarjeta.titulo}
-        </h4>
-        <p className="text-sm leading-normal text-slate-700">
-          {tarjeta.texto}
-        </p>
-      </div>
-    </Tarjeta>
-  );
-}
-
-function SenalesView({
-  senales,
-}: {
-  senales: SenalTexto[];
-}) {
-  return (
-    <Tarjeta className="overflow-hidden p-0 sm:p-0">
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[32rem] text-left text-sm">
-          <thead className="bg-blue-600 text-white">
-            <tr>
-              <th scope="col" className="px-5 py-4 font-semibold">
-                Señal en el texto
-              </th>
-              <th scope="col" className="px-5 py-4 font-semibold">
-                Suele indicar
-              </th>
-              <th scope="col" className="px-5 py-4 font-semibold">
-                Ejemplo
-              </th>
-            </tr>
-          </thead>
-
-          <tbody className="divide-y divide-slate-100">
-            {senales.map((senal) => (
-              <tr
-                key={senal.senal}
-                className="align-top text-slate-700 transition hover:bg-sky-50/60"
-              >
-                <td className="px-5 py-4 font-medium text-slate-900">
-                  {senal.senal}
-                </td>
-                <td className="px-5 py-4 text-blue-800">
-                  {senal.indica}
-                </td>
-                <td className="px-5 py-4 italic text-slate-600">
-                  {senal.ejemplo}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </Tarjeta>
-  );
-}
-
-function NotacionView({
-  notacion,
-}: {
-  notacion: NotacionAlternativa;
-}) {
-  return (
-    <Tarjeta className="space-y-2 p-5">
-      <h4 className="font-bold text-slate-900">
-        {notacion.nombre}
-      </h4>
-      <p className="text-sm leading-normal text-slate-700">
-        {notacion.descripcion}
-      </p>
-    </Tarjeta>
-  );
-}
-
-// Galería adaptable de símbolos de Chen.
-// Los grupos con cinco símbolos se organizan en filas de 3 y 2.
-function GaleriaSimbolos({
-  simbolos,
-}: {
-  simbolos: SimboloChen[];
+  elementos: ElementoGrafico[];
 }) {
   const [seleccionado, setSeleccionado] =
     useState<string | null>(null);
 
-  const simboloActivo = simbolos.find(
-    (simbolo) => simbolo.id === seleccionado
+  const elementoActivo = elementos.find(
+    (elemento) => elemento.nombre === seleccionado
   );
-
-  const cincoSimbolos = simbolos.length === 5;
 
   return (
     <div className="w-full space-y-5">
       <p className="text-sm text-slate-600">
-        Selecciona un símbolo para consultar su explicación y ejemplo.
+        Selecciona un elemento para conocer su definición y un ejemplo.
       </p>
 
-      <div
-        className={
-          cincoSimbolos
-            ? 'grid w-full grid-cols-1 gap-4 sm:grid-cols-6'
-            : 'grid w-full gap-4'
-        }
-        style={
-          cincoSimbolos
-            ? undefined
-            : {
-                gridTemplateColumns:
-                  'repeat(auto-fit, minmax(min(100%, 230px), 1fr))',
-              }
-        }
-      >
-        {simbolos.map((simbolo, indice) => (
-          <div
-            key={simbolo.id}
-            className={
-              cincoSimbolos
-                ? indice < 3
-                  ? 'flex min-w-0 sm:col-span-2 [&>button]:w-full'
-                  : 'flex min-w-0 sm:col-span-3 [&>button]:w-full'
-                : 'flex min-w-0 [&>button]:w-full'
-            }
-          >
-            <TarjetaSimbolo
-              simbolo={simbolo}
-              activo={seleccionado === simbolo.id}
-              onSeleccionar={() =>
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+        {elementos.map((elemento) => {
+          const estilo =
+            elemento.tono === 'linea'
+              ? ESTILO_LINEA
+              : ESTILOS_CONCEPTO[elemento.tono];
+
+          const activo = seleccionado === elemento.nombre;
+
+          return (
+            <button
+              key={elemento.nombre}
+              type="button"
+              aria-pressed={activo}
+              onClick={() =>
                 setSeleccionado(
-                  seleccionado === simbolo.id
-                    ? null
-                    : simbolo.id
+                  activo ? null : elemento.nombre
                 )
               }
-            />
-          </div>
-        ))}
+              className={`group flex min-w-0 flex-col items-center gap-3 rounded-2xl border bg-white p-4 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+                activo
+                  ? 'border-blue-600 bg-blue-50/50 ring-2 ring-blue-100'
+                  : 'border-slate-200 hover:border-blue-300'
+              }`}
+            >
+              <div className="flex w-full items-center justify-center rounded-xl bg-sky-50 p-3">
+                <FiguraSimbolo figura={elemento.figura} />
+              </div>
+
+              <span
+                className={`rounded-full px-3 py-1 text-sm font-semibold ${estilo.fondo} ${estilo.texto}`}
+              >
+                {elemento.nombre}
+              </span>
+
+              <span className="flex items-center gap-1 text-xs font-medium text-blue-700">
+                {activo ? 'Ocultar' : 'Ver explicación'}
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform ${
+                    activo ? 'rotate-180' : ''
+                  }`}
+                  aria-hidden
+                />
+              </span>
+            </button>
+          );
+        })}
       </div>
 
-      {simboloActivo && (
-        <DetalleSimbolo simbolo={simboloActivo} />
+      {elementoActivo && (
+        <div
+          role="region"
+          aria-label={`Explicación de ${elementoActivo.nombre}`}
+          className="animate-aparecer rounded-2xl border border-blue-200 bg-white p-5 shadow-sm sm:p-6"
+        >
+          <div className="mb-4 flex items-start justify-between gap-4">
+            <h4 className="text-xl font-bold text-blue-900">
+              {elementoActivo.nombre}
+            </h4>
+
+            <button
+              type="button"
+              onClick={() => setSeleccionado(null)}
+              aria-label="Cerrar explicación"
+              className="rounded-full bg-slate-100 p-2 text-slate-600 transition hover:bg-slate-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600"
+            >
+              <X className="h-5 w-5" aria-hidden />
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <p className="mb-1 text-sm font-bold text-slate-800">
+                ¿Qué es?
+              </p>
+              <p className="leading-relaxed text-slate-700">
+                {elementoActivo.definicion}
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-blue-50 p-4">
+              <p className="text-sm font-bold text-blue-900">
+                Ejemplo
+              </p>
+              <p className="mt-1 leading-relaxed text-blue-900">
+                {elementoActivo.ejemplo}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Comparaciones de dos conceptos:
+// Entidad débil vs. asociativa,
+// Participación total vs. parcial,
+// Cardinalidad vs. participación, etc.
+export function ComparativaFiguras({
+  elementos,
+}: {
+  elementos: ElementoComparado[];
+}) {
+  const [seleccionado, setSeleccionado] =
+    useState<string | null>(null);
+
+  const elementoActivo = elementos.find(
+    (elemento) => elemento.titulo === seleccionado
+  );
+
+  return (
+    <div className="w-full space-y-5">
+      <p className="text-sm text-slate-600">
+        Selecciona un diagrama para consultar su explicación y ejemplo.
+      </p>
+
+      <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2">
+        {elementos.map((elemento) => {
+          const activo = seleccionado === elemento.titulo;
+
+          return (
+            <button
+              key={elemento.titulo}
+              type="button"
+              aria-pressed={activo}
+              onClick={() =>
+                setSeleccionado(
+                  activo ? null : elemento.titulo
+                )
+              }
+              className={`flex min-w-0 flex-col items-center gap-4 rounded-2xl border bg-white p-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+                activo
+                  ? 'border-blue-600 bg-blue-50/50 ring-2 ring-blue-100'
+                  : 'border-slate-200 hover:border-blue-300'
+              }`}
+            >
+              <div className="flex w-full items-center justify-center rounded-2xl bg-sky-50 px-3 py-5">
+                <FiguraSimbolo figura={elemento.figura} />
+              </div>
+
+              <h4 className="text-lg font-bold text-slate-900">
+                {elemento.titulo}
+              </h4>
+
+              <span className="flex items-center gap-2 text-sm font-medium text-blue-700">
+                {activo ? 'Ocultar' : 'Ver explicación'}
+                <ChevronDown
+                  className={`h-4 w-4 transition-transform duration-200 ${
+                    activo ? 'rotate-180' : ''
+                  }`}
+                  aria-hidden
+                />
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {elementoActivo && (
+        <div
+          role="region"
+          aria-label={`Explicación de ${elementoActivo.titulo}`}
+          className="animate-aparecer rounded-2xl border border-blue-200 bg-white p-5 shadow-sm sm:p-6"
+        >
+          <div className="mb-5 flex items-start justify-between gap-4">
+            <h4 className="text-xl font-bold text-blue-900">
+              {elementoActivo.titulo}
+            </h4>
+
+            <button
+              type="button"
+              onClick={() => setSeleccionado(null)}
+              aria-label="Cerrar explicación"
+              className="rounded-full bg-slate-100 p-2 text-slate-600 transition hover:bg-slate-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600"
+            >
+              <X className="h-5 w-5" aria-hidden />
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            <div>
+              <p className="mb-2 text-sm font-semibold text-slate-800">
+                Explicación
+              </p>
+              <p className="leading-relaxed text-slate-700">
+                {elementoActivo.descripcion}
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-blue-50 p-4">
+              <p className="text-sm font-semibold text-blue-900">
+                Ejemplo
+              </p>
+              <p className="mt-1 leading-relaxed text-blue-900">
+                {elementoActivo.ejemplo}
+              </p>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
