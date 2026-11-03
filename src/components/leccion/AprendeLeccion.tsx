@@ -12,7 +12,7 @@ import type { BloqueAprende, NotacionAlternativa, SenalTexto, TarjetaIntro } fro
 
 interface AprendeLeccionProps {
   bloques: BloqueAprende[];
-}
+ mm}mm
 
 export function AprendeLeccion({ bloques }: AprendeLeccionProps) {
   return (
@@ -70,7 +70,6 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
       <SeccionAprende
         titulo={bloque.titulo}
         descripcion={bloque.descripcion}
-        plegable
       >
         <GaleriaSimbolos simbolos={bloque.simbolos} />
       </SeccionAprende>
