@@ -13,7 +13,7 @@ export function ElementosGraficos({ elementos }: { elementos: ElementoGrafico[] 
   return (
     <div className="w-full space-y-5">
       <p className="text-sm text-slate-600">Selecciona un elemento para conocer su definición y un ejemplo.</p>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
         {elementos.map((elemento) => {
           const estilo = elemento.tono === 'linea' ? ESTILO_LINEA : ESTILOS_CONCEPTO[elemento.tono];
           const activo = seleccionado === elemento.nombre;
