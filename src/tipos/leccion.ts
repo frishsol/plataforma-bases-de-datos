@@ -85,7 +85,8 @@ export type VisualPaso =
   | { tipo: 'frase'; segmentos: SegmentoFrase[]; resalta: TipoConcepto }
   | { tipo: 'diagrama'; diagrama: DiagramaER }
   | { tipo: 'resultado'; grupos: GrupoResultado[] }
-  | { tipo: 'planteamiento'; segmentos: SegmentoPlanteamiento[]; resalta: CategoriaPlanteamiento };
+  | { tipo: 'planteamiento'; segmentos: SegmentoPlanteamiento[]; resalta: CategoriaPlanteamiento }
+  | { tipo: 'tablas'; tablas: TablaEjemplo[] };
 
 export interface PasoObservacion {
   titulo: string;

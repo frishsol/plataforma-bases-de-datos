@@ -1,4 +1,5 @@
 import { DiagramaERSvg } from '@/components/diagrama/DiagramaERSvg';
+import { VistaTabla } from '@/components/leccion/ComparativaTablas';
 import { ESTILOS_CATEGORIA_PLANTEAMIENTO, ESTILOS_CONCEPTO } from '@/components/leccion/estilosConcepto';
 import type {
   CategoriaPlanteamiento,
@@ -26,6 +27,16 @@ export function VisualPaso({ visual, descripcion }: VisualPasoProps) {
     return (
       <div className="rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:p-6">
         <DiagramaERSvg diagrama={visual.diagrama} descripcion={descripcion} />
+      </div>
+    );
+  }
+
+  if (visual.tipo === 'tablas') {
+    return (
+      <div className="grid min-w-0 gap-5 md:grid-cols-2">
+        {visual.tablas.map((tabla) => (
+          <VistaTabla key={tabla.nombre} etiqueta="Tabla" colorEtiqueta="bg-sky-100 text-sky-900" tabla={tabla} />
+        ))}
       </div>
     );
   }

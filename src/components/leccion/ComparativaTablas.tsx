@@ -54,7 +54,7 @@ export function ComparativaTablas({
   );
 }
 
-function VistaTabla({
+export function VistaTabla({
   etiqueta,
   colorEtiqueta,
   tabla,
