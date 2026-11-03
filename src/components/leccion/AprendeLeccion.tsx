@@ -12,7 +12,7 @@ import type { BloqueAprende, NotacionAlternativa, SenalTexto, TarjetaIntro } fro
 
 interface AprendeLeccionProps {
   bloques: BloqueAprende[];
- mm}mm
+}
 
 export function AprendeLeccion({ bloques }: AprendeLeccionProps) {
   return (
