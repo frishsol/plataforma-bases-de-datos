@@ -135,19 +135,24 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
       );
 
     case 'comparativa-notaciones':
-      return (
-        <SeccionAprende titulo={bloque.titulo} plegable>
-          <div className="space-y-6">
-            <p className="max-w-3xl leading-normal text-slate-700">{bloque.texto}</p>
-            <ComparativaNotaciones />
-            <div className="grid gap-5 md:grid-cols-3">
-              {bloque.otras.map((notacion) => (
-                <NotacionView key={notacion.nombre} notacion={notacion} />
-              ))}
-            </div>
+    return (
+      <SeccionAprende titulo={bloque.titulo}>
+        <div className="space-y-6">
+          <p className="max-w-3xl leading-normal text-slate-700">
+            {bloque.texto}
+          </p>
+          <ComparativaNotaciones />
+          <div className="grid gap-5 md:grid-cols-3">
+            {bloque.otras.map((notacion) => (
+              <NotacionView
+                key={notacion.nombre}
+                notacion={notacion}
+              />
+            ))}
           </div>
-        </SeccionAprende>
-      );
+        </div>
+      </SeccionAprende>
+    );
   }
 }
 
