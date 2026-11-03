@@ -287,7 +287,12 @@ function GaleriaSimbolos({
         Selecciona un símbolo para consultar su explicación y ejemplo.
       </p>
 
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+      <div
+        className="grid gap-4"
+        style={{
+          gridTemplateColumns: `repeat(${Math.min(simbolos.length, 4)}, minmax(0, 1fr))`,
+        }}
+      >
         {simbolos.map((simbolo) => (
           <TarjetaSimbolo
             key={simbolo.id}
