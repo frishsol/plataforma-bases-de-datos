@@ -1,78 +1,277 @@
-import { COLOR_CHEN } from './coloresChen';
-
-const TRAZO_PATA = '#0f766e';
-
-function CajaEntidad({ x, nombre }: { x: number; nombre: string }) {
-  return (
-    <g>
-      <rect x={x} y={70} width={100} height={40} rx={4} fill={COLOR_CHEN.entidad.relleno} stroke={COLOR_CHEN.entidad.trazo} strokeWidth={2} />
-      <text x={x + 50} y={90} textAnchor="middle" dominantBaseline="central" fontSize={14} fontWeight={700} fill={COLOR_CHEN.texto}>
-        {nombre}
-      </text>
-    </g>
-  );
-}
-
-function ChenPanel() {
-  return (
-    <svg viewBox="0 0 400 180" role="img" aria-label="Cliente tiene Mascota en notación de Chen" className="h-auto w-full">
-      <line x1={120} y1={90} x2={160} y2={90} stroke={COLOR_CHEN.conexion} strokeWidth={1.6} />
-      <line x1={240} y1={90} x2={280} y2={90} stroke={COLOR_CHEN.conexion} strokeWidth={1.6} />
-      <CajaEntidad x={20} nombre="Cliente" />
-      <CajaEntidad x={280} nombre="Mascota" />
-      <polygon points="200,62 240,90 200,118 160,90" fill={COLOR_CHEN.relacion.relleno} stroke={COLOR_CHEN.relacion.trazo} strokeWidth={2} />
-      <text x={200} y={90} textAnchor="middle" dominantBaseline="central" fontSize={13} fill={COLOR_CHEN.texto}>
-        tiene
-      </text>
-      <circle cx={136} cy={78} r={10} fill="white" stroke={COLOR_CHEN.conexion} strokeWidth={1.2} />
-      <text x={136} y={78} textAnchor="middle" dominantBaseline="central" fontSize={12} fontWeight={700} fill={COLOR_CHEN.etiqueta}>
-        1
-      </text>
-      <circle cx={264} cy={78} r={10} fill="white" stroke={COLOR_CHEN.conexion} strokeWidth={1.2} />
-      <text x={264} y={78} textAnchor="middle" dominantBaseline="central" fontSize={12} fontWeight={700} fill={COLOR_CHEN.etiqueta}>
-        N
-      </text>
-    </svg>
-  );
-}
-
-function PataGalloPanel() {
-  return (
-    <svg viewBox="0 0 400 180" role="img" aria-label="Cliente tiene Mascota en notación pata de gallo" className="h-auto w-full">
-      <line x1={120} y1={90} x2={280} y2={90} stroke={TRAZO_PATA} strokeWidth={2} />
-      <line x1={130} y1={78} x2={130} y2={102} stroke={TRAZO_PATA} strokeWidth={2} />
-      <line x1={137} y1={78} x2={137} y2={102} stroke={TRAZO_PATA} strokeWidth={2} />
-      <path d="M266 78 L280 90 L266 102 M266 90 L280 90" fill="none" stroke={TRAZO_PATA} strokeWidth={2} />
-      <CajaEntidad x={20} nombre="Cliente" />
-      <CajaEntidad x={280} nombre="Mascota" />
-      <text x={200} y={78} textAnchor="middle" fontSize={12} fill={COLOR_CHEN.texto}>
-        tiene
-      </text>
-    </svg>
-  );
-}
+import { Tarjeta } from '@/components/ui/Tarjeta';
 
 export function ComparativaNotaciones() {
   return (
-    <div className="grid gap-5 md:grid-cols-2">
-      <figure className="space-y-3 rounded-2xl bg-blue-50/70 p-5 ring-1 ring-blue-100">
-        <figcaption className="space-y-1">
-          <p className="font-semibold text-blue-900">Chen</p>
-          <p className="text-sm leading-normal text-slate-700">
-            El rombo une las entidades y las etiquetas 1 y N aparecen junto a cada entidad.
-          </p>
-        </figcaption>
-        <ChenPanel />
-      </figure>
-      <figure className="space-y-3 rounded-2xl bg-teal-50/70 p-5 ring-1 ring-teal-100">
-        <figcaption className="space-y-1">
-          <p className="font-semibold text-teal-900">Pata de gallo (Crow&apos;s Foot)</p>
-          <p className="text-sm leading-normal text-slate-700">
-            No hay rombo: la línea se lee en los extremos. Una barra es uno y la pata de tres puntas es muchos.
-          </p>
-        </figcaption>
-        <PataGalloPanel />
-      </figure>
+    <div className="space-y-5">
+      <p className="text-sm text-slate-600">
+        La misma relación <span className="font-semibold">Cliente tiene Mascota</span>{' '}
+        puede representarse con distintas notaciones. Aquí se muestran solo
+        para reconocer cómo se ven, sin entrar todavía en todos sus detalles.
+      </p>
+
+      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <TarjetaNotacion
+          titulo="Chen"
+          descripcion="Usa rectángulos para entidades, rombos para relaciones y la cardinalidad junto a la relación."
+        >
+          <DiagramaChen />
+        </TarjetaNotacion>
+
+        <TarjetaNotacion
+          titulo="Pata de gallo (Crow’s Foot)"
+          descripcion="No usa rombo: la cardinalidad se expresa con símbolos al final de la línea."
+        >
+          <DiagramaCrowFoot />
+        </TarjetaNotacion>
+
+        <TarjetaNotacion
+          titulo="UML"
+          descripcion="Usa cajas tipo clase y multiplicidades como 1 y 0..* sobre la asociación."
+        >
+          <DiagramaUML />
+        </TarjetaNotacion>
+
+        <TarjetaNotacion
+          titulo="Barker"
+          descripcion="Es parecida a la pata de gallo, pero suele escribir la relación sobre la línea."
+        >
+          <DiagramaBarker />
+        </TarjetaNotacion>
+      </div>
     </div>
+  );
+}
+
+function TarjetaNotacion({
+  titulo,
+  descripcion,
+  children,
+}: {
+  titulo: string;
+  descripcion: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Tarjeta className="flex h-full flex-col gap-4 p-5">
+      <div className="rounded-2xl bg-sky-50 p-4 ring-1 ring-sky-100">
+        {children}
+      </div>
+
+      <div className="space-y-2">
+        <h4 className="text-lg font-bold text-slate-900">{titulo}</h4>
+        <p className="text-sm leading-normal text-slate-700">{descripcion}</p>
+      </div>
+    </Tarjeta>
+  );
+}
+
+function DiagramaChen() {
+  return (
+    <svg viewBox="0 0 320 120" className="h-36 w-full">
+      {/* Cliente */}
+      <rect
+        x="12"
+        y="42"
+        width="86"
+        height="36"
+        rx="4"
+        fill="#EFF6FF"
+        stroke="#2563EB"
+        strokeWidth="2"
+      />
+      <text x="55" y="64" textAnchor="middle" fontSize="14" fill="#1E293B">
+        Cliente
+      </text>
+
+      {/* relación */}
+      <line x1="98" y1="60" x2="125" y2="60" stroke="#64748B" strokeWidth="2" />
+      <line x1="195" y1="60" x2="222" y2="60" stroke="#64748B" strokeWidth="2" />
+
+      <polygon
+        points="160,34 195,60 160,86 125,60"
+        fill="#F5F3FF"
+        stroke="#7C3AED"
+        strokeWidth="2"
+      />
+      <text x="160" y="64" textAnchor="middle" fontSize="13" fill="#1E293B">
+        tiene
+      </text>
+
+      <text x="112" y="52" textAnchor="middle" fontSize="12" fill="#1E293B">
+        1
+      </text>
+      <text x="208" y="52" textAnchor="middle" fontSize="12" fill="#1E293B">
+        N
+      </text>
+
+      {/* Mascota */}
+      <rect
+        x="222"
+        y="42"
+        width="86"
+        height="36"
+        rx="4"
+        fill="#EFF6FF"
+        stroke="#2563EB"
+        strokeWidth="2"
+      />
+      <text x="265" y="64" textAnchor="middle" fontSize="14" fill="#1E293B">
+        Mascota
+      </text>
+    </svg>
+  );
+}
+
+function DiagramaCrowFoot() {
+  return (
+    <svg viewBox="0 0 320 120" className="h-36 w-full">
+      {/* Cliente */}
+      <rect
+        x="12"
+        y="42"
+        width="86"
+        height="36"
+        rx="4"
+        fill="#EFF6FF"
+        stroke="#2563EB"
+        strokeWidth="2"
+      />
+      <text x="55" y="64" textAnchor="middle" fontSize="14" fill="#1E293B">
+        Cliente
+      </text>
+
+      {/* línea */}
+      <line x1="98" y1="60" x2="222" y2="60" stroke="#0F766E" strokeWidth="2.5" />
+      <text x="160" y="50" textAnchor="middle" fontSize="13" fill="#1E293B">
+        tiene
+      </text>
+
+      {/* uno */}
+      <line x1="112" y1="44" x2="112" y2="76" stroke="#0F766E" strokeWidth="2.5" />
+      <line x1="120" y1="44" x2="120" y2="76" stroke="#0F766E" strokeWidth="2.5" />
+
+      {/* muchos */}
+      <line x1="222" y1="60" x2="238" y2="48" stroke="#0F766E" strokeWidth="2.5" />
+      <line x1="222" y1="60" x2="238" y2="60" stroke="#0F766E" strokeWidth="2.5" />
+      <line x1="222" y1="60" x2="238" y2="72" stroke="#0F766E" strokeWidth="2.5" />
+
+      {/* Mascota */}
+      <rect
+        x="238"
+        y="42"
+        width="70"
+        height="36"
+        rx="4"
+        fill="#EFF6FF"
+        stroke="#2563EB"
+        strokeWidth="2"
+      />
+      <text x="273" y="64" textAnchor="middle" fontSize="14" fill="#1E293B">
+        Mascota
+      </text>
+    </svg>
+  );
+}
+
+function DiagramaUML() {
+  return (
+    <svg viewBox="0 0 320 120" className="h-36 w-full">
+      {/* Cliente */}
+      <rect
+        x="12"
+        y="28"
+        width="100"
+        height="56"
+        fill="#EFF6FF"
+        stroke="#2563EB"
+        strokeWidth="2"
+      />
+      <line x1="12" y1="48" x2="112" y2="48" stroke="#2563EB" strokeWidth="1.5" />
+      <text x="62" y="42" textAnchor="middle" fontSize="14" fill="#1E293B">
+        Cliente
+      </text>
+      <text x="20" y="66" fontSize="11" fill="#475569">
+        id_cliente
+      </text>
+
+      {/* asociación */}
+      <line x1="112" y1="56" x2="208" y2="56" stroke="#64748B" strokeWidth="2" />
+      <text x="123" y="48" fontSize="12" fill="#1E293B">
+        1
+      </text>
+      <text x="180" y="48" fontSize="12" fill="#1E293B">
+        0..*
+      </text>
+
+      {/* Mascota */}
+      <rect
+        x="208"
+        y="28"
+        width="100"
+        height="56"
+        fill="#EFF6FF"
+        stroke="#2563EB"
+        strokeWidth="2"
+      />
+      <line x1="208" y1="48" x2="308" y2="48" stroke="#2563EB" strokeWidth="1.5" />
+      <text x="258" y="42" textAnchor="middle" fontSize="14" fill="#1E293B">
+        Mascota
+      </text>
+      <text x="216" y="66" fontSize="11" fill="#475569">
+        id_mascota
+      </text>
+    </svg>
+  );
+}
+
+function DiagramaBarker() {
+  return (
+    <svg viewBox="0 0 320 120" className="h-36 w-full">
+      {/* Cliente */}
+      <rect
+        x="12"
+        y="42"
+        width="86"
+        height="36"
+        rx="4"
+        fill="#EFF6FF"
+        stroke="#2563EB"
+        strokeWidth="2"
+      />
+      <text x="55" y="64" textAnchor="middle" fontSize="14" fill="#1E293B">
+        Cliente
+      </text>
+
+      {/* línea */}
+      <line x1="98" y1="60" x2="222" y2="60" stroke="#0F766E" strokeWidth="2.5" />
+      <text x="160" y="50" textAnchor="middle" fontSize="13" fill="#1E293B">
+        tiene
+      </text>
+
+      {/* símbolo lado Cliente */}
+      <circle cx="113" cy="60" r="3.5" fill="#0F766E" />
+      <line x1="122" y1="44" x2="122" y2="76" stroke="#0F766E" strokeWidth="2.5" />
+
+      {/* símbolo lado Mascota */}
+      <line x1="222" y1="60" x2="238" y2="48" stroke="#0F766E" strokeWidth="2.5" />
+      <line x1="222" y1="60" x2="238" y2="60" stroke="#0F766E" strokeWidth="2.5" />
+      <line x1="222" y1="60" x2="238" y2="72" stroke="#0F766E" strokeWidth="2.5" />
+      <line x1="214" y1="44" x2="214" y2="76" stroke="#0F766E" strokeWidth="2.5" />
+
+      {/* Mascota */}
+      <rect
+        x="238"
+        y="42"
+        width="70"
+        height="36"
+        rx="4"
+        fill="#EFF6FF"
+        stroke="#2563EB"
+        strokeWidth="2"
+      />
+      <text x="273" y="64" textAnchor="middle" fontSize="14" fill="#1E293B">
+        Mascota
+      </text>
+    </svg>
   );
 }
