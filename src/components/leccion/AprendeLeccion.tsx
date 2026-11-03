@@ -96,7 +96,7 @@ function BloqueView({ bloque }: { bloque: BloqueAprende }) {
     case 'ejemplo-diagrama':
       return (
         <SeccionAprende titulo={bloque.titulo} descripcion={bloque.descripcion}>
-          <Tarjeta className="grid gap-6 p-5 sm:p-8 lg:grid-cols-[1.4fr_1fr]">
+          <Tarjeta className="grid min-w-0 grid-cols-1 gap-6 overflow-hidden p-4 sm:p-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
             <div className="rounded-2xl bg-sky-50 p-4 ring-1 ring-sky-100">
               <DiagramaERSvg diagrama={bloque.diagrama} descripcion={bloque.descripcion} />
             </div>
