@@ -26,16 +26,42 @@ export function AprendeLeccion({ bloques }: AprendeLeccionProps) {
 
 function BloqueView({ bloque }: { bloque: BloqueAprende }) {
   switch (bloque.tipo) {
-    case 'tarjetas-intro':
-      return (
-        <SeccionAprende titulo={bloque.titulo}>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {bloque.tarjetas.map((tarjeta) => (
-              <TarjetaIntroView key={tarjeta.titulo} tarjeta={tarjeta} />
-            ))}
+    
+case 'tarjetas-intro': {
+  const cantidad = bloque.tarjetas.length;
+  const cincoTarjetas = cantidad === 5;
+
+  return (
+    <SeccionAprende titulo={bloque.titulo}>
+      <div
+        className={
+          cincoTarjetas
+            ? 'grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-6'
+            : cantidad === 2
+              ? 'grid grid-cols-1 gap-5 sm:grid-cols-2'
+              : cantidad === 3
+                ? 'grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'
+                : 'grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4'
+        }
+      >
+        {bloque.tarjetas.map((tarjeta, indice) => (
+          <div
+            key={tarjeta.titulo}
+            className={
+              cincoTarjetas
+                ? indice < 3
+                  ? 'min-w-0 lg:col-span-2'
+                  : 'min-w-0 lg:col-span-3'
+                : 'min-w-0'
+            }
+          >
+            <TarjetaIntroView tarjeta={tarjeta} />
           </div>
-        </SeccionAprende>
-      );
+        ))}
+      </div>
+    </SeccionAprende>
+  );
+}
 
     case 'destacado':
       return (
