@@ -87,6 +87,8 @@ export type VisualPaso =
   | { tipo: 'resultado'; grupos: GrupoResultado[] }
   | { tipo: 'planteamiento'; segmentos: SegmentoPlanteamiento[]; resalta: CategoriaPlanteamiento }
   | { tipo: 'tablas'; tablas: TablaEjemplo[] };
+  | { tipo: 'tablas'; tablas: TablaEjemplo[] }
+  | { tipo: 'tabla-interactiva'; tabla: TablaEjemplo };
 
 export interface PasoObservacion {
   titulo: string;
