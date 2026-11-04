@@ -44,6 +44,24 @@ export function TablaInteractiva({ tabla }: TablaInteractivaProps) {
 
   return (
     <div className="w-full min-w-0 space-y-4">
+      <div className="rounded-xl border border-sky-200 bg-sky-50 p-4">
+      <div className="flex items-start gap-3">
+        <span className="text-xl" aria-hidden="true">🔎</span>
+    
+        <div className="space-y-1">
+          <p className="font-semibold text-sky-900">
+            Explora la tabla interactiva
+          </p>
+    
+          <p className="text-sm leading-relaxed text-sky-800">
+            Haz clic en los encabezados de las columnas, en los
+            números de las filas o en los botones de clave primaria
+            y clave foránea. Observa qué elementos se resaltan y
+            lee la explicación que aparece debajo de la tabla.
+          </p>
+        </div>
+      </div>
+    </div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h3 className="font-semibold text-slate-900">
           Tabla {tabla.nombre}
