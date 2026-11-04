@@ -41,6 +41,7 @@ export interface SegmentoPlanteamiento {
 
 export interface GrupoResultado {
   tipo: TipoConcepto;
+  etiqueta?: string;
   elementos: string[];
 }
 
