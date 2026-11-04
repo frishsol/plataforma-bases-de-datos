@@ -39,20 +39,43 @@ export function VisualPaso({ visual, descripcion }: VisualPasoProps) {
       </div>
     );
   }
-  if (visual.tipo === 'tablas-interactivas') {
+  
+if (visual.tipo === 'tablas-interactivas') {
   return (
-    <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-2">
-      {visual.tablas.map((tabla) => (
-        <div
-          key={tabla.nombre}
-          className="min-w-0 rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:p-5"
-        >
-          <TablaInteractiva tabla={tabla} />
+    <div className="w-full min-w-0 space-y-5">
+      <div className="flex items-start gap-3 rounded-xl border border-sky-200 bg-sky-50 p-4">
+        <span className="text-xl" aria-hidden="true">🔎</span>
+
+        <div className="space-y-1">
+          <p className="font-semibold text-sky-900">
+            Explora las tablas interactivas
+          </p>
+          <p className="text-sm leading-relaxed text-sky-800">
+            Selecciona los encabezados de las columnas, los números
+            de las filas o los botones de claves. Observa qué
+            elementos se resaltan y consulta su explicación
+            debajo de cada tabla.
+          </p>
         </div>
-      ))}
+      </div>
+
+      <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-2">
+        {visual.tablas.map((tabla) => (
+          <div
+            key={tabla.nombre}
+            className="min-w-0 rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:p-5"
+          >
+            <TablaInteractiva
+              tabla={tabla}
+              mostrarInstrucciones={false}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
+
   
   if (visual.tipo === 'tablas') {
     return (
