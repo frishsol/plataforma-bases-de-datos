@@ -184,8 +184,8 @@ const OBSERVA: PasoObservacion[] = [
     explicacion:
       'Ejemplo ilustrativo: si el peso de Nube todavía no se ha capturado, SQL muestra NULL. No equivale a 0 ni a una cadena vacía, por eso las consultas lo tratan de forma distinta.',
     visual: {
-      tipo: 'tablas',
-      tablas: [MASCOTA_CON_NULL],
+      tipo: 'tabla-interactiva',
+      tabla: MASCOTA_CON_NULL,
     },
   },
   {
