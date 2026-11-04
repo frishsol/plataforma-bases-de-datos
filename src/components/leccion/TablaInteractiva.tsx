@@ -208,12 +208,11 @@ export function TablaInteractiva({ tabla }: TablaInteractivaProps) {
       >
         {!seleccion && (
           <p>
-            Selecciona una fila, columna o clave para descubrir
-            su significado.
-            {contieneNull && ' También puedes explorar el valor NULL.'}
+            {contieneNull
+              ? 'Selecciona una fila, una columna, una clave o la celda NULL para descubrir su significado.'
+              : 'Selecciona una fila, una columna o una clave para descubrir su significado.'}
           </p>
         )}
-
         {seleccion?.tipo === 'fila' && (
           <p>
             <strong>Tupla {seleccion.indice + 1}:</strong>{' '}
