@@ -1,3 +1,4 @@
+import { TablaInteractiva } from '@/components/leccion/TablaInteractiva';
 import { DiagramaERSvg } from '@/components/diagrama/DiagramaERSvg';
 import { VistaTabla } from '@/components/leccion/ComparativaTablas';
 import { ESTILOS_CATEGORIA_PLANTEAMIENTO, ESTILOS_CONCEPTO } from '@/components/leccion/estilosConcepto';
@@ -31,6 +32,13 @@ export function VisualPaso({ visual, descripcion }: VisualPasoProps) {
     );
   }
 
+  if (visual.tipo === 'tabla-interactiva') {
+    return (
+      <div className="w-full min-w-0 rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:p-6">
+        <TablaInteractiva tabla={visual.tabla} />
+      </div>
+    );
+  }  
   if (visual.tipo === 'tablas') {
     return (
       <div className={`grid min-w-0 gap-5 ${
