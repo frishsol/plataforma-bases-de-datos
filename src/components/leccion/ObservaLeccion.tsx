@@ -29,7 +29,7 @@ export function ObservaLeccion({ pasos }: ObservaLeccionProps) {
         <div key={indice} className="animate-aparecer space-y-6">
           <div className="space-y-2">
             <h3 className="text-xl font-bold text-slate-900">{paso.titulo}</h3>
-            <p className="max-w-3xl leading-relaxed text-slate-700">{paso.explicacion}</p>
+            <p className="w-full leading-relaxed text-slate-700">{paso.explicacion}</p>
           </div>
           <VisualPaso visual={paso.visual} descripcion={paso.titulo} />
         </div>
