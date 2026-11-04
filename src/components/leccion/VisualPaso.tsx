@@ -33,7 +33,9 @@ export function VisualPaso({ visual, descripcion }: VisualPasoProps) {
 
   if (visual.tipo === 'tablas') {
     return (
-      <div className="grid min-w-0 gap-5 md:grid-cols-2">
+      <div className={`grid min-w-0 gap-5 ${
+        visual.tablas.length > 1 ? 'lg:grid-cols-2' : 'grid-cols-1'
+      }`}>
         {visual.tablas.map((tabla) => (
           <VistaTabla key={tabla.nombre} etiqueta="Tabla" colorEtiqueta="bg-sky-100 text-sky-900" tabla={tabla} />
         ))}
