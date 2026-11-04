@@ -214,7 +214,7 @@ function SeccionAprende({
 function TarjetaIntroView({ tarjeta }: { tarjeta: TarjetaIntro }) {
   const Icono = tarjeta.icono;
   return (
-    <Tarjeta className="flex flex-col gap-4 p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <Tarjeta className="flex h-full w-full flex-col gap-4 p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
       <div className="flex items-center justify-between">
         <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md shadow-blue-600/25">
           <Icono className="h-6 w-6" aria-hidden />
