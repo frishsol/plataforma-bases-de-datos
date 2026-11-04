@@ -84,7 +84,7 @@ const OBSERVA: PasoObservacion[] = [
     titulo: 'Paso 1: la clave primaria identifica cada fila',
     explicacion:
       'En Cliente, id_cliente identifica a cada cliente sin repetirse. En Servicio, id_servicio cumple el mismo papel. Ninguno de los dos puede quedar vacío.',
-    visual: { tipo: 'tablas', tablas: [TABLA_CLIENTE, TABLA_SERVICIO] },
+    visual: { tipo: 'tablas-interactivas', tablas: [TABLA_CLIENTE, TABLA_SERVICIO] },
   },
   {
     titulo: 'Paso 2: una clave foránea apunta a una clave primaria',
