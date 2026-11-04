@@ -38,7 +38,22 @@ export function VisualPaso({ visual, descripcion }: VisualPasoProps) {
         <TablaInteractiva tabla={visual.tabla} />
       </div>
     );
-  }  
+  }
+  if (visual.tipo === 'tablas-interactivas') {
+  return (
+    <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-2">
+      {visual.tablas.map((tabla) => (
+        <div
+          key={tabla.nombre}
+          className="min-w-0 rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:p-5"
+        >
+          <TablaInteractiva tabla={tabla} />
+        </div>
+      ))}
+    </div>
+  );
+}
+  
   if (visual.tipo === 'tablas') {
     return (
       <div className={`grid min-w-0 gap-5 ${
