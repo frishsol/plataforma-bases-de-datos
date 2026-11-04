@@ -106,7 +106,7 @@ const OBSERVA: PasoObservacion[] = [
     titulo: 'Paso 1: una entidad se convierte en una tabla',
     explicacion:
       'La entidad Mascota del modelo E-R pasa a ser una relación, que en la práctica es una tabla. Cada mascota registrada ocupa una fila, llamada tupla.',
-    visual: { tipo: 'tablas', tablas: [TABLA_MASCOTA] },
+      visual: { tipo: 'tabla-interactiva', tabla: TABLA_MASCOTA },
   },
   {
     titulo: 'Paso 2: atributos y dominios',
