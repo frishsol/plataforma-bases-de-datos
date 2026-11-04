@@ -90,7 +90,7 @@ const OBSERVA: PasoObservacion[] = [
     titulo: 'Paso 2: una clave foránea apunta a una clave primaria',
     explicacion:
       'Cada mascota pertenece a un solo cliente. Por eso id_cliente en Mascota es obligatoria y debe coincidir con un id_cliente existente en Cliente.',
-    visual: { tipo: 'tablas', tablas: [TABLA_CLIENTE, TABLA_MASCOTA] },
+    visual: { tipo: 'tablas-interactivas', tablas: [TABLA_CLIENTE, TABLA_MASCOTA] },
   },
   {
     titulo: 'Paso 3: una referencia inexistente se rechaza',
