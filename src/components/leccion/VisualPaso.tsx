@@ -58,7 +58,7 @@ export function VisualPaso({ visual, descripcion }: VisualPasoProps) {
         return (
           <div key={grupo.tipo} className="space-y-3 rounded-2xl bg-white p-5 ring-1 ring-slate-200">
             <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${estilo.fondo} ${estilo.texto}`}>
-              {estilo.etiqueta}
+              {grupo.etiqueta ?? estilo.etiqueta}
             </span>
             <ul className="space-y-2 text-slate-800">
               {grupo.elementos.map((elemento) => (
