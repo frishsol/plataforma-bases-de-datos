@@ -17,8 +17,13 @@ const APRENDE: BloqueAprende[] = [
     tarjetas: [
       {
         icono: KeyRound,
-        titulo: 'Superclave y candidata',
-        texto: 'Una superclave identifica tuplas de manera única; una clave candidata es una superclave mínima, sin atributos sobrantes.',
+        titulo: 'Superclave',
+        texto: 'Conjunto de uno o más atributos que permite identificar de forma única cada tupla. Ejemplo: {id_mascota, nombre} es una superclave de Mascota.',
+      },
+      {
+        icono: KeyRound,
+        titulo: 'Clave candidata',
+        texto: 'Superclave mínima: identifica cada tupla sin atributos innecesarios. Ejemplo: {id_mascota} es candidata porque por sí sola identifica cada mascota.',
       },
       {
         icono: KeyRound,
