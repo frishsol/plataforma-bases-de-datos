@@ -101,12 +101,16 @@ const MASCOTA_CON_NULL = {
   filas: [...TABLA_MASCOTA.filas.slice(0, 2), ['3', '11', 'Nube', 'Gato', '2023-01-20', 'NULL']],
 };
 
+
 const OBSERVA: PasoObservacion[] = [
   {
     titulo: 'Paso 1: una entidad se convierte en una tabla',
     explicacion:
       'La entidad Mascota del modelo E-R pasa a ser una relación, que en la práctica es una tabla. Cada mascota registrada ocupa una fila, llamada tupla.',
-      visual: { tipo: 'tabla-interactiva', tabla: TABLA_MASCOTA },
+    visual: {
+      tipo: 'tabla-interactiva',
+      tabla: TABLA_MASCOTA,
+    },
   },
   {
     titulo: 'Paso 2: atributos y dominios',
@@ -115,22 +119,63 @@ const OBSERVA: PasoObservacion[] = [
     visual: {
       tipo: 'resultado',
       grupos: [
-        { tipo: 'atributo', elementos: ['especie: dominio {Perro, Gato}', 'peso: número decimal', 'fecha_nacimiento: fecha válida'] },
-        { tipo: 'entidad', elementos: ['Mascota tiene seis atributos: su grado es 6'] },
-        { tipo: 'relacion', elementos: ['Esquema: Mascota(id_mascota, id_cliente, nombre, especie, fecha_nacimiento, peso)'] },
+        {
+          tipo: 'atributo',
+          etiqueta: 'Dominios',
+          elementos: [
+            'especie: dominio {Perro, Gato}',
+            'peso: número decimal',
+            'fecha_nacimiento: fecha válida',
+          ],
+        },
+        {
+          tipo: 'entidad',
+          etiqueta: 'Grado de la relación',
+          elementos: [
+            'Mascota tiene seis atributos: su grado es 6',
+          ],
+        },
+        {
+          tipo: 'relacion',
+          etiqueta: 'Esquema relacional',
+          elementos: [
+            'Esquema: Mascota(id_mascota, id_cliente, nombre, especie, fecha_nacimiento, peso)',
+          ],
+        },
       ],
     },
   },
   {
     titulo: 'Paso 3: esquema e instancia',
     explicacion:
-      'El esquema es la definición de la relación y permanece igual. La instancia son las tuplas presentes en un momento dado: hoy hay tres mascotas registradas, así que la cardinalidad es 3.',
+      'El esquema es la definición de la relación y permanece igual mientras no se modifique su estructura. La instancia contiene las tuplas presentes en un momento determinado. En este ejemplo hay tres mascotas registradas, por lo que la cardinalidad es 3.',
     visual: {
       tipo: 'resultado',
       grupos: [
-        { tipo: 'entidad', elementos: ['Esquema: no cambia mientras la tabla exista'] },
-        { tipo: 'atributo', elementos: ['Instancia: 3 tuplas hoy', 'Cambia cuando se registran o eliminan mascotas'] },
-        { tipo: 'relacion', elementos: ['Grado: 6 atributos', 'Cardinalidad: 3 tuplas'] },
+        {
+          tipo: 'entidad',
+          etiqueta: 'Esquema',
+          elementos: [
+            'Define los atributos y sus dominios.',
+            'Permanece igual mientras no se modifique la estructura.',
+          ],
+        },
+        {
+          tipo: 'atributo',
+          etiqueta: 'Instancia',
+          elementos: [
+            'Contiene 3 tuplas en este ejemplo.',
+            'Cambia cuando se registran o eliminan mascotas.',
+          ],
+        },
+        {
+          tipo: 'relacion',
+          etiqueta: 'Grado y cardinalidad',
+          elementos: [
+            'Grado: 6 atributos.',
+            'Cardinalidad: 3 tuplas.',
+          ],
+        },
       ],
     },
   },
@@ -138,22 +183,47 @@ const OBSERVA: PasoObservacion[] = [
     titulo: 'Paso 4: NULL es una marca, no un valor',
     explicacion:
       'Ejemplo ilustrativo: si el peso de Nube todavía no se ha capturado, SQL muestra NULL. No equivale a 0 ni a una cadena vacía, por eso las consultas lo tratan de forma distinta.',
-    visual: { tipo: 'tablas', tablas: [MASCOTA_CON_NULL] },
+    visual: {
+      tipo: 'tablas',
+      tablas: [MASCOTA_CON_NULL],
+    },
   },
   {
     titulo: 'Paso 5: formal frente a SQL',
     explicacion:
-      'En el modelo formal las tuplas no se repiten. En SQL, una tabla sin clave puede tener filas idénticas. La clave primaria, que estudiarás en el siguiente subtema, evita esas repeticiones.',
+      'En el modelo relacional formal, las tuplas no se repiten porque una relación es un conjunto. En SQL, una tabla puede contener filas duplicadas si no existen restricciones que lo impidan. Una clave primaria garantiza la identificación única de sus filas.',
     visual: {
       tipo: 'resultado',
       grupos: [
-        { tipo: 'entidad', elementos: ['Modelo formal: conjunto de tuplas sin repeticiones'] },
-        { tipo: 'atributo', elementos: ['SQL: filas que pueden repetirse si no hay clave'] },
-        { tipo: 'relacion', elementos: ['Ambos: una tabla representa una relación'] },
+        {
+          tipo: 'entidad',
+          etiqueta: 'Modelo formal',
+          elementos: [
+            'Una relación es un conjunto de tuplas.',
+            'No admite tuplas repetidas.',
+          ],
+        },
+        {
+          tipo: 'atributo',
+          etiqueta: 'Tabla SQL',
+          elementos: [
+            'Una tabla puede contener filas idénticas si no existen restricciones que lo impidan.',
+            'La clave primaria impide duplicados en las columnas que la conforman.',
+          ],
+        },
+        {
+          tipo: 'relacion',
+          etiqueta: 'En común',
+          elementos: [
+            'Los datos se organizan mediante atributos y registros.',
+            'Las tablas SQL permiten implementar estructuras inspiradas en el modelo relacional.',
+          ],
+        },
       ],
     },
   },
 ];
+
 
 const PRACTICA: Pregunta[] = [
   {
