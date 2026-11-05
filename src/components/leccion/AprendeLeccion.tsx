@@ -16,7 +16,7 @@ interface AprendeLeccionProps {
 
 export function AprendeLeccion({ bloques }: AprendeLeccionProps) {
   return (
-    <div className="animate-aparecer space-y-12">
+    <div className="animate-aparecer space-y-10">
       {bloques.map((bloque, indice) => (
         <BloqueView key={indice} bloque={bloque} />
       ))}
@@ -65,11 +65,12 @@ case 'tarjetas-intro': {
 
     case 'destacado':
       return (
-        <div className="flex gap-4 rounded-3xl bg-blue-700 p-6 text-white shadow-lg shadow-blue-700/20 sm:p-8">
-          <Lightbulb className="mt-0.5 h-6 w-6 shrink-0 text-sky-200" aria-hidden />
-          <div className="space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-wide text-sky-200">{bloque.titulo}</p>
-            <p className="text-lg leading-normal text-white">{bloque.texto}</p>
+        <div className="relative flex gap-4 overflow-hidden rounded-2xl bg-gradient-to-br from-brand-700 to-brand-800 p-6 text-white shadow-elevated sm:p-8">
+          <div aria-hidden className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-accent-400/20 blur-2xl" />
+          <Lightbulb className="relative mt-0.5 h-6 w-6 shrink-0 text-accent-300" aria-hidden />
+          <div className="relative space-y-2">
+            <p className="text-sm font-bold uppercase tracking-widest text-accent-300">{bloque.titulo}</p>
+            <p className="text-pretty text-lg leading-relaxed text-white">{bloque.texto}</p>
           </div>
         </div>
       );
@@ -104,11 +105,11 @@ case 'tarjetas-intro': {
 
     case 'actividad-atributos':
       return (
-        <details className="group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200/80 open:ring-blue-200">
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 [&::-webkit-details-marker]:hidden">
+        <details className="group overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-slate-200/70 open:ring-brand-300">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 transition hover:bg-slate-50/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand-500 [&::-webkit-details-marker]:hidden">
             <span className="space-y-1">
-              <span className="block text-xs font-semibold uppercase tracking-wide text-blue-600">Actividad</span>
-              <span className="block text-lg font-bold text-slate-900">{bloque.titulo}</span>
+              <span className="block text-xs font-bold uppercase tracking-widest text-brand-600">Actividad</span>
+              <span className="block text-lg font-bold tracking-tight text-slate-900">{bloque.titulo}</span>
             </span>
             <ChevronDown className="h-5 w-5 shrink-0 text-slate-500 transition-transform duration-300 group-open:rotate-180" aria-hidden />
           </summary>
@@ -181,13 +182,13 @@ function SeccionAprende({
 }) {
   if (plegable) {
     return (
-      <details className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600 sm:p-6 [&::-webkit-details-marker]:hidden">
-          <div className="space-y-2">
-            <h3 className="text-xl font-bold text-blue-900">{titulo}</h3>
-            {descripcion && <p className="text-sm leading-normal text-slate-600">{descripcion}</p>}
+      <details className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition hover:shadow-elevated">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-600 sm:p-6 [&::-webkit-details-marker]:hidden">
+          <div className="space-y-1.5">
+            <h3 className="text-xl font-bold tracking-tight text-slate-900">{titulo}</h3>
+            {descripcion && <p className="text-pretty text-sm leading-relaxed text-slate-600">{descripcion}</p>}
           </div>
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-2xl font-medium text-blue-700">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-50 text-xl font-bold text-brand-700 ring-1 ring-brand-100 transition group-open:bg-brand-600 group-open:text-white">
             <span className="group-open:hidden">+</span>
             <span className="hidden group-open:inline">−</span>
           </span>
@@ -201,10 +202,10 @@ function SeccionAprende({
     <section className="space-y-6">
       <div className="space-y-2">
         <div className="flex items-center gap-3">
-          <span className="h-7 w-1.5 rounded-full bg-blue-600" aria-hidden />
-          <h3 className="text-2xl font-bold text-blue-900">{titulo}</h3>
+          <span className="h-8 w-1.5 rounded-full bg-gradient-to-b from-brand-500 to-accent-500" aria-hidden />
+          <h3 className="text-2xl font-extrabold tracking-tight text-slate-900">{titulo}</h3>
         </div>
-        {descripcion && <p className="max-w-3xl text-slate-600">{descripcion}</p>}
+        {descripcion && <p className="max-w-3xl text-pretty leading-relaxed text-slate-600">{descripcion}</p>}
       </div>
       {children}
     </section>
@@ -214,18 +215,18 @@ function SeccionAprende({
 function TarjetaIntroView({ tarjeta }: { tarjeta: TarjetaIntro }) {
   const Icono = tarjeta.icono;
   return (
-    <Tarjeta className="flex h-full w-full flex-col gap-4 p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <Tarjeta className="group flex h-full w-full flex-col gap-4 p-6 transition duration-300 hover:-translate-y-1 hover:shadow-elevated hover:ring-brand-200">
       <div className="flex items-center justify-between">
-        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-md shadow-blue-600/25">
+        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-accent-500 text-white shadow-md shadow-brand-500/25 transition group-hover:scale-105">
           <Icono className="h-6 w-6" aria-hidden />
         </span>
         {tarjeta.etiqueta && (
-          <span className="rounded-full bg-sky-100 px-3 py-1 text-xs font-bold text-sky-900">{tarjeta.etiqueta}</span>
+          <span className="rounded-full bg-accent-50 px-3 py-1 text-xs font-bold text-accent-700 ring-1 ring-accent-100">{tarjeta.etiqueta}</span>
         )}
       </div>
       <div className="space-y-2">
-        <h4 className="text-lg font-bold text-slate-900">{tarjeta.titulo}</h4>
-        <p className="text-sm leading-normal text-slate-700">{tarjeta.texto}</p>
+        <h4 className="text-lg font-bold tracking-tight text-slate-900">{tarjeta.titulo}</h4>
+        <p className="text-pretty text-sm leading-relaxed text-slate-600">{tarjeta.texto}</p>
       </div>
     </Tarjeta>
   );
@@ -236,19 +237,19 @@ function SenalesView({ senales }: { senales: SenalTexto[] }) {
     <Tarjeta className="overflow-hidden p-0 sm:p-0">
       <div className="overflow-x-auto">
         <table className="w-full min-w-[32rem] text-left text-sm">
-          <thead className="bg-blue-600 text-white">
+          <thead className="bg-gradient-to-r from-brand-600 to-brand-700 text-white">
             <tr>
-              <th scope="col" className="px-5 py-4 font-semibold">Señal en el texto</th>
-              <th scope="col" className="px-5 py-4 font-semibold">Suele indicar</th>
-              <th scope="col" className="px-5 py-4 font-semibold">Ejemplo</th>
+              <th scope="col" className="px-5 py-4 text-sm font-bold tracking-tight">Señal en el texto</th>
+              <th scope="col" className="px-5 py-4 text-sm font-bold tracking-tight">Suele indicar</th>
+              <th scope="col" className="px-5 py-4 text-sm font-bold tracking-tight">Ejemplo</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {senales.map((senal) => (
-              <tr key={senal.senal} className="align-top text-slate-700 transition hover:bg-sky-50/60">
-                <td className="px-5 py-4 font-medium text-slate-900">{senal.senal}</td>
-                <td className="px-5 py-4 text-blue-800">{senal.indica}</td>
-                <td className="px-5 py-4 italic text-slate-600">{senal.ejemplo}</td>
+              <tr key={senal.senal} className="align-top text-slate-700 transition hover:bg-brand-50/50">
+                <td className="px-5 py-4 font-semibold text-slate-900">{senal.senal}</td>
+                <td className="px-5 py-4 text-brand-700">{senal.indica}</td>
+                <td className="px-5 py-4 font-mono text-sm text-slate-500">{senal.ejemplo}</td>
               </tr>
             ))}
           </tbody>

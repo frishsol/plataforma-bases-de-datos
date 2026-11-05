@@ -1,4 +1,4 @@
-import { BookOpen, CheckCircle2, Clock } from 'lucide-react';
+import { BookOpen, CheckCircle2, Clock, ChevronRight } from 'lucide-react';
 import { Boton } from '@/components/ui/Boton';
 import type { Leccion } from '@/tipos/leccion';
 import type { SubtemaModulo, TemaModulo } from '@/tipos/modulo';
@@ -14,20 +14,20 @@ export function TemaModuloItem({ tema, numero, onAbrirLeccion }: TemaModuloItemP
   const disponible = Boolean(leccion) || subtemas.some((subtema) => subtema.leccion);
 
   return (
-    <li className="space-y-5 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200/80 sm:p-8">
+    <li className="space-y-5 rounded-2xl bg-white p-6 shadow-card ring-1 ring-slate-200/70 transition duration-300 hover:shadow-elevated sm:p-7">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex gap-4">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-sm font-bold text-slate-700">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-50 to-accent-50 text-sm font-extrabold text-brand-700 ring-1 ring-brand-100">
             {numero}
           </span>
-          <div className="space-y-1">
-            <p className="text-lg font-semibold text-slate-900">{tema.titulo}</p>
-            {tema.descripcion && <p className="leading-normal text-slate-600">{tema.descripcion}</p>}
+          <div className="space-y-1.5">
+            <p className="text-lg font-bold tracking-tight text-slate-900">{tema.titulo}</p>
+            {tema.descripcion && <p className="text-pretty leading-relaxed text-slate-600">{tema.descripcion}</p>}
             <EstadoContenido disponible={disponible} />
           </div>
         </div>
         {leccion && (
-          <Boton variante="secundario" onClick={() => onAbrirLeccion(leccion)}>
+          <Boton variante="secundario" onClick={() => onAbrirLeccion(leccion)} className="shrink-0">
             <BookOpen className="h-4 w-4" aria-hidden />
             Abrir lección
           </Boton>
@@ -35,7 +35,7 @@ export function TemaModuloItem({ tema, numero, onAbrirLeccion }: TemaModuloItemP
       </div>
 
       {subtemas.length > 0 && (
-        <ol className="divide-y divide-slate-100 overflow-hidden rounded-2xl ring-1 ring-slate-200/80">
+        <ol className="divide-y divide-slate-100 overflow-hidden rounded-xl ring-1 ring-slate-200/70">
           {subtemas.map((subtema, indice) => (
             <SubtemaItem
               key={subtema.titulo}
@@ -62,21 +62,25 @@ function SubtemaItem({
   const { leccion } = subtema;
 
   return (
-    <li className="flex flex-col gap-3 bg-white px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+    <li className="group flex flex-col gap-3 bg-white px-5 py-4 transition hover:bg-slate-50/80 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-center gap-4">
-        <span className="shrink-0 rounded-lg bg-blue-50 px-2.5 py-1 font-mono text-xs font-semibold text-blue-800">
+        <span className="shrink-0 rounded-lg bg-brand-50 px-2.5 py-1 font-mono text-xs font-bold text-brand-700 ring-1 ring-brand-100">
           {codigo}
         </span>
         <div className="space-y-1">
-          <p className="font-medium text-slate-900">{subtema.titulo}</p>
+          <p className="font-semibold tracking-tight text-slate-900">{subtema.titulo}</p>
           <EstadoContenido disponible={Boolean(leccion)} />
         </div>
       </div>
       {leccion && (
-        <Boton variante="secundario" onClick={() => onAbrirLeccion(leccion)}>
-          <BookOpen className="h-4 w-4" aria-hidden />
-          Abrir lección
-        </Boton>
+        <button
+          type="button"
+          onClick={() => onAbrirLeccion(leccion)}
+          className="group/btn inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-brand-700 transition hover:bg-brand-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+        >
+          Abrir
+          <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5" aria-hidden />
+        </button>
       )}
     </li>
   );
@@ -84,12 +88,12 @@ function SubtemaItem({
 
 function EstadoContenido({ disponible }: { disponible: boolean }) {
   return disponible ? (
-    <p className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-800">
+    <p className="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700">
       <CheckCircle2 className="h-4 w-4" aria-hidden />
       Lección disponible
     </p>
   ) : (
-    <p className="inline-flex items-center gap-1.5 text-sm text-slate-500">
+    <p className="inline-flex items-center gap-1.5 text-sm text-slate-400">
       <Clock className="h-4 w-4" aria-hidden />
       Próximamente
     </p>

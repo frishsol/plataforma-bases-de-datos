@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, GraduationCap } from 'lucide-react';
 import { ETAPAS_LECCION, type EtapaLeccion } from '@/datos/etapasLeccion';
 import { AprendeLeccion } from '@/components/leccion/AprendeLeccion';
 import { IndicadorEtapas } from '@/components/leccion/IndicadorEtapas';
 import { ObservaLeccion } from '@/components/leccion/ObservaLeccion';
 import { PracticaLeccion } from '@/components/leccion/PracticaLeccion';
 import { Boton } from '@/components/ui/Boton';
-import { Tarjeta } from '@/components/ui/Tarjeta';
 import type { Leccion } from '@/tipos/leccion';
 import type { Modulo } from '@/tipos/modulo';
 import type { Vista } from '@/tipos/navegacion';
@@ -45,19 +44,30 @@ export function LeccionPagina({ modulo, leccion, onNavegar }: LeccionPaginaProps
       <button
         type="button"
         onClick={volverAlModulo}
-        className="inline-flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600 sm:py-2 transition hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+        className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
       >
         <ArrowLeft className="h-4 w-4" aria-hidden />
         Volver al módulo
       </button>
 
-      <Tarjeta className="space-y-3">
-        <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">
-          {ubicacion}
-        </p>
-        <h2 className="text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-4xl">{leccion.titulo}</h2>
-        <p className="leading-normal text-slate-600">{leccion.objetivo}</p>
-      </Tarjeta>
+      <section className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-card ring-1 ring-slate-200/70 sm:p-8">
+        <div
+          aria-hidden
+          className="absolute right-0 top-0 h-32 w-32 rounded-bl-[3rem] bg-gradient-to-br from-brand-50 to-accent-50 opacity-60"
+        />
+        <div className="relative space-y-3">
+          <div className="flex items-center gap-2">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+              <GraduationCap className="h-4 w-4" aria-hidden />
+            </span>
+            <p className="text-sm font-bold uppercase tracking-widest text-brand-600">{ubicacion}</p>
+          </div>
+          <h2 className="text-balance text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl">
+            {leccion.titulo}
+          </h2>
+          <p className="max-w-2xl text-pretty leading-relaxed text-slate-600">{leccion.objetivo}</p>
+        </div>
+      </section>
 
       <IndicadorEtapas actual={etapa} onSeleccionar={irA} />
 

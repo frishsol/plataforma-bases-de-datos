@@ -18,18 +18,18 @@ export function ComparativaTablas({
       <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-2">
         <VistaTabla
           etiqueta="Modelo lógico"
-          colorEtiqueta="bg-sky-100 text-sky-900"
+          colorEtiqueta="bg-brand-50 text-brand-700 ring-1 ring-brand-100"
           tabla={logica}
         />
         <VistaTabla
           etiqueta="Modelo físico (MySQL)"
-          colorEtiqueta="bg-teal-100 text-teal-900"
+          colorEtiqueta="bg-accent-50 text-accent-700 ring-1 ring-accent-100"
           tabla={fisica}
         />
       </div>
 
-      <Tarjeta className="min-w-0 space-y-3 p-5 sm:p-6">
-        <p className="font-semibold text-slate-900">
+      <Tarjeta className="min-w-0 space-y-3 p-5 ring-1 ring-slate-200/70 sm:p-6">
+        <p className="font-bold tracking-tight text-slate-900">
           Qué cambia al pasar de un modelo a otro
         </p>
 
@@ -40,7 +40,7 @@ export function ComparativaTablas({
               className="flex min-w-0 gap-3 text-sm leading-normal text-slate-700"
             >
               <span
-                className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600"
+                className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"
                 aria-hidden
               />
               <span className="min-w-0 break-words">
@@ -64,18 +64,18 @@ export function VistaTabla({
   tabla: TablaEjemplo;
 }) {
   return (
-    <Tarjeta className="flex w-full min-w-0 max-w-full flex-col gap-4 overflow-hidden p-4 sm:p-6">
+    <Tarjeta className="flex w-full min-w-0 max-w-full flex-col gap-4 overflow-hidden p-4 ring-1 ring-slate-200/70 sm:p-6">
       <span
-        className={`inline-flex w-fit max-w-full rounded-full px-3 py-1 text-xs font-semibold ${colorEtiqueta}`}
+        className={`inline-flex w-fit max-w-full rounded-full px-3 py-1 text-xs font-bold tracking-tight ${colorEtiqueta}`}
       >
         {etiqueta}
       </span>
 
-      <p className="min-w-0 break-words font-mono text-base font-bold text-slate-900">
+      <p className="min-w-0 break-words font-mono text-base font-bold tracking-tight text-slate-900">
         Tabla {tabla.nombre}
       </p>
 
-      <p className="text-xs text-slate-500 sm:hidden">
+      <p className="text-xs text-slate-400 sm:hidden">
         Desliza la tabla hacia los lados para ver todas las columnas.
       </p>
 
@@ -83,16 +83,16 @@ export function VistaTabla({
         role="region"
         aria-label={`Tabla del ${etiqueta}: ${tabla.nombre}`}
         tabIndex={0}
-        className="w-full min-w-0 max-w-full overflow-x-auto rounded-2xl ring-1 ring-slate-200"
+        className="w-full min-w-0 max-w-full overflow-x-auto rounded-xl ring-1 ring-slate-200/70 scrollbar-slim"
       >
         <table className="w-max min-w-full border-collapse text-left text-sm">
-          <thead className="bg-slate-100 text-slate-700">
+          <thead className="bg-slate-50/80 text-slate-600">
             <tr>
               {tabla.columnas.map((columna) => (
                 <th
                   key={columna}
                   scope="col"
-                  className="whitespace-nowrap px-4 py-3 font-semibold"
+                  className="whitespace-nowrap px-4 py-3 text-xs font-bold uppercase tracking-tight"
                 >
                   {columna}
                 </th>
@@ -104,12 +104,12 @@ export function VistaTabla({
             {tabla.filas.map((fila, filaIndice) => (
               <tr
                 key={filaIndice}
-                className="transition hover:bg-sky-50/60"
+                className="transition hover:bg-brand-50/40"
               >
                 {fila.map((celda, indice) => (
                   <td
                     key={indice}
-                    className="whitespace-nowrap px-4 py-3 font-mono text-slate-800"
+                    className="whitespace-nowrap px-4 py-3 font-mono text-slate-700"
                   >
                     {celda}
                   </td>

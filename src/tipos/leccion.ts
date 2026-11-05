@@ -87,7 +87,6 @@ export type VisualPaso =
   | { tipo: 'diagrama'; diagrama: DiagramaER }
   | { tipo: 'resultado'; grupos: GrupoResultado[] }
   | { tipo: 'planteamiento'; segmentos: SegmentoPlanteamiento[]; resalta: CategoriaPlanteamiento }
-  | { tipo: 'tablas'; tablas: TablaEjemplo[] };
   | { tipo: 'tablas'; tablas: TablaEjemplo[] }
   | { tipo: 'tabla-interactiva'; tabla: TablaEjemplo }
   | { tipo: 'tablas-interactivas'; tablas: TablaEjemplo[] };

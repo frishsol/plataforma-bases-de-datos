@@ -51,18 +51,18 @@ export function TablaInteractiva({
   return (
     <div className="w-full min-w-0 space-y-4">
       {mostrarInstrucciones && (
-        <div className="rounded-xl border border-sky-200 bg-sky-50 p-4">
+        <div className="rounded-xl border border-brand-200 bg-brand-50/80 p-4">
           <div className="flex items-start gap-3">
-            <span className="text-xl" aria-hidden="true">
-              🔎
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-brand-600 shadow-soft" aria-hidden>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
             </span>
 
             <div className="space-y-1">
-              <p className="font-semibold text-sky-900">
+              <p className="font-bold text-brand-900">
                 Explora la tabla interactiva
               </p>
 
-              <p className="text-sm leading-relaxed text-sky-800">
+              <p className="text-sm leading-relaxed text-brand-800">
                 Haz clic en los encabezados de las columnas,
                 en los números de las filas o en los botones
                 de clave primaria y clave foránea.
@@ -108,11 +108,11 @@ export function TablaInteractiva({
         </div>
       </div>
 
-      <div className="w-full overflow-x-auto rounded-xl border border-slate-200">
+      <div className="w-full overflow-x-auto rounded-xl ring-1 ring-slate-200/70 scrollbar-slim">
         <table className="min-w-full border-collapse text-left text-sm">
-          <thead className="bg-slate-100">
+          <thead className="bg-slate-50/80">
             <tr>
-              <th scope="col" className="px-3 py-3">
+              <th scope="col" className="px-3 py-3 text-xs font-bold uppercase tracking-tight text-slate-400">
                 #
               </th>
 
@@ -128,10 +128,10 @@ export function TablaInteractiva({
                     onClick={() =>
                       seleccionar({ tipo: 'columna', indice })
                     }
-                    className={`w-full whitespace-nowrap px-4 py-3 text-left font-semibold ${
+                    className={`w-full whitespace-nowrap px-4 py-3 text-left font-semibold tracking-tight transition ${
                       columnaResaltada(indice)
-                        ? 'bg-blue-600 text-white'
-                        : 'text-slate-700 hover:bg-blue-100'
+                        ? 'bg-brand-600 text-white'
+                        : 'text-slate-600 hover:bg-brand-100/70'
                     }`}
                   >
                     {columna}
@@ -160,11 +160,11 @@ export function TablaInteractiva({
                         indice: indiceFila,
                       })
                     }
-                    className={`w-full px-3 py-3 font-medium ${
+                    className={`w-full px-3 py-3 text-sm font-bold transition ${
                       seleccion?.tipo === 'fila' &&
                       seleccion.indice === indiceFila
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-slate-50 text-slate-600 hover:bg-blue-100'
+                        ? 'bg-brand-600 text-white'
+                        : 'bg-slate-50 text-slate-500 hover:bg-brand-100/70'
                     }`}
                   >
                     {indiceFila + 1}
@@ -184,10 +184,10 @@ export function TablaInteractiva({
                       key={indiceColumna}
                       className={`whitespace-nowrap p-0 font-mono ${
                         columnaResaltada(indiceColumna)
-                          ? 'bg-blue-50'
+                          ? 'bg-brand-50'
                           : seleccion?.tipo === 'fila' &&
                               seleccion.indice === indiceFila
-                            ? 'bg-sky-50'
+                            ? 'bg-accent-50/60'
                             : ''
                       }`}
                     >
@@ -227,7 +227,7 @@ export function TablaInteractiva({
 
       <div
         aria-live="polite"
-        className="min-h-20 rounded-xl bg-blue-50 p-4 text-sm text-slate-700"
+        className="min-h-20 rounded-xl bg-brand-50/60 p-4 text-sm text-slate-700 ring-1 ring-brand-100"
       >
         {!seleccion && (
           <p>

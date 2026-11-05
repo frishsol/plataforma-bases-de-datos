@@ -14,13 +14,15 @@ export function PracticaLeccion({ preguntas, onSalir }: PracticaLeccionProps) {
 
   return (
     <div className="animate-aparecer space-y-6">
-      <Tarjeta className="flex gap-4 p-6">
-        <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-teal-600" aria-hidden />
-        <p className="text-sm leading-normal text-slate-600">
-          Puedes pedir una pista en cualquier pregunta y reintentar tantas veces como necesites. Las pistas no restan
-          puntos: sirven para aprender.
+      <div className="flex gap-4 rounded-2xl bg-gradient-to-br from-accent-50 to-brand-50 p-5 ring-1 ring-accent-100 sm:p-6">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-accent-600 shadow-soft">
+          <Lightbulb className="h-5 w-5" aria-hidden />
+        </span>
+        <p className="text-pretty text-sm leading-relaxed text-slate-700">
+          Puedes pedir una pista en cualquier pregunta y reintentar tantas veces como necesites. Las
+          pistas no restan puntos: sirven para aprender.
         </p>
-      </Tarjeta>
+      </div>
 
       <EjecutorDesafio
         key={intento}
